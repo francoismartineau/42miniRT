@@ -1,4 +1,5 @@
-SRC_FILES	=	exit.c \
+SRC_FILES	=	debug/debug.c \
+				exit.c \
 				main.c \
 				parse/obj.c \
 				parse/obj2.c \
@@ -21,8 +22,8 @@ NAME=miniRT
 
 CC=gcc
 CCFLAGS=-Wall -Wextra -Wpedantic -Werror -Isrc
-LDFLAGS=-L${HOME}/.brew/opt/readline/lib
-LDLIBS=-lreadline
+LDFLAGS=
+LDLIBS=
 
 all: $(NAME)
 

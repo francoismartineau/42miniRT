@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:26:56 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/12 11:19:31 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/13 09:38:57 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ static long	extract_integral(char const **str)
 	return (integral);
 }
 
-static double	extract_fractional(char const *str)
+static double	extract_fractional(char const **str)
 {
 	long			fract;
 	unsigned int	fract_len;
 
 	fract = 0;
 	fract_len = 0;
-	while (is_digit(*str))
+	while (is_digit(**str))
 	{
 		fract *= 10;
-		fract += *str++ - '0';
+		fract += *(*str)++ - '0';
 		++fract_len;
 	}
 	if (!fract_len)
@@ -57,6 +57,7 @@ double	atod(char const **str)
 	*str += (**str == '-');
 	integral = extract_integral(str);
 	if (**str != '.')
-		return (integral);
-	return (sign * (integral + extract_fractional(++(*str))));
+		return (sign * integral);
+	++*str;
+	return (sign * (integral + extract_fractional(str)));
 }
