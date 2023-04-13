@@ -1,0 +1,8 @@
+.vscode/
+
+miniRT
+
+a.out
+*.o
+*.d
+*.dSYM
