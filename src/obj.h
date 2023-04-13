@@ -77,17 +77,12 @@ typedef enum e_type
 	e_light,
 	e_sphere,
 	e_plane,
-<<<<<<< HEAD
-	e_cylinder
-=======
 	e_cylinder,
->>>>>>> dcadc1da15fa4c285c1eed99878a86d054cef41b
 }	t_type;
 
 typedef struct s_obj
 {
 	t_type			type;
-<<<<<<< HEAD
 	union
 	{
 		t_cylinder	cylinder;
@@ -97,16 +92,6 @@ typedef struct s_obj
 		t_camera	camera;
 		t_a_light	a_light;
 	};
-=======
-	double			coord[3];
-	double			ori[3];
-	double			ratio;
-	double			axis[3];
-	double			diam;
-	double			height;
-	int				color;
-	unsigned int	fov;
->>>>>>> dcadc1da15fa4c285c1eed99878a86d054cef41b
 }	t_obj;
 
 int	in_fov_range(unsigned int n);
