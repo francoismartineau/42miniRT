@@ -70,25 +70,26 @@ typedef struct s_cylinder
 
 typedef enum e_type
 {
-	t_a_light,
-	t_camera,
-	t_light,
-	t_sphere,
-	t_plane
-	t_cylinder,
+	e_a_light,
+	e_camera,
+	e_light,
+	e_sphere,
+	e_plane,
+	e_cylinder
 }	t_type;
 
 typedef struct s_obj
 {
 	t_type			type;
-	double			coord[3];
-	double			ori[3];
-	double			ratio;
-	double			axis;
-	double			diam;
-	double			height;
-	int				color;
-	unsigned int	fov;
+	union
+	{
+		t_cylinder	cylinder;
+		t_plane		plane;
+		t_sphere	sphere;
+		t_light		light;
+		t_camera	camera;
+		t_a_light	a_light;
+	};
 }	t_obj;
 
 int	in_fov_range(unsigned int n);
