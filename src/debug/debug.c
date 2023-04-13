@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 08:30:10 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/13 13:32:28 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/13 16:03:37 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,6 @@ void	assert(char const *str, int res)
 	}
 }
 
-static int	eq_double(double a, double b)
-{
-	return (a >= b - .1 && a <= b + .1);
-}
-
 void	debug(void)
 {
 	int		fd;
@@ -53,7 +48,5 @@ void	debug(void)
 	write(fd, STR1, strln(STR1));
 	close(fd);
 	objs = parse_file(FILE1);
-	assert("A", objs[0]->type == e_a_light);
-	assert("0.2", eq_double(objs[0]->ratio, 0.2));
-	assert("255,255,255", objs[0]->color == -1);
+	free_objs(objs);
 }

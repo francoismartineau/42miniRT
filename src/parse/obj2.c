@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:19:25 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/13 13:09:04 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/13 15:57:18 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ t_obj	*parse_plane(char const *line, int *err)
 		return (NULL);
 	res = ft_malloc(sizeof(*res));
 	res->type = e_plane;
-	parse_vec(res->coord, &line, err, any);
-	parse_vec(res->ori, &line, err, signed_normalized);
-	res->color = parse_color(&line, err);
+	parse_vec(res->plane.coord, &line, err, any);
+	parse_vec(res->plane.ori, &line, err, signed_normalized);
+	res->plane.color = parse_color(&line, err);
 	if (*err == ERROR)
 		return (ft_free((void **) &res));
 	return (res);
@@ -40,11 +40,11 @@ t_obj	*parse_cylinder(char const *line, int *err)
 		return (NULL);
 	res = ft_malloc(sizeof(*res));
 	res->type = e_cylinder;
-	parse_vec(res->coord, &line, err, any);
-	parse_vec(res->axis, &line, err, signed_normalized);
-	res->diam = parse_double(&line, err, positive);
-	res->height = parse_double(&line, err, positive);
-	res->color = parse_color(&line, err);
+	parse_vec(res->cylinder.coord, &line, err, any);
+	parse_vec(res->cylinder.axis, &line, err, signed_normalized);
+	res->cylinder.diam = parse_double(&line, err, positive);
+	res->cylinder.height = parse_double(&line, err, positive);
+	res->cylinder.color = parse_color(&line, err);
 	if (*err == ERROR)
 		return (ft_free((void **) &res));
 	return (res);
