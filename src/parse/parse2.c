@@ -6,10 +6,11 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:29:18 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/12 14:21:16 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/13 12:37:16 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "def.h"
 #include "util/util.h"
 
@@ -68,7 +69,8 @@ double	parse_double(char const **str, int *err, int in_range(double))
 	double	res;
 
 	skip_spaces(str);
-	if (!is_digit(**str))
+	if ((**str == '-' && !is_digit((*str)[1]))
+		|| (**str != '-' && !is_digit(**str)))
 		*err = ERROR;
 	if (*err == ERROR)
 		return (0);
@@ -81,24 +83,23 @@ double	parse_double(char const **str, int *err, int in_range(double))
 	return (res);
 }
 
-double	*parse_vec(char const **str, int *err, int in_range(double))
+void	parse_vec(double dst[3], char const **str,
+	int *err, int in_range(double))
 {
 	int		i;
-	double	*res;
 
 	if (*err == ERROR)
-		return (NULL);
+		return ;
 	skip_spaces(str);
-	res = ft_malloc(3);
 	i = 0;
 	while (i < 3)
 	{
-		res[i] = parse_double(str, err, in_range);
+		dst[i] = parse_double(str, err, in_range);
 		if (i < 2 && **str != ',')
 			*err = ERROR;
 		if (*err == ERROR)
-			return (ft_free((void **) &res));
+			return ;
+		*str += (i < 2);
 		++i;
 	}
-	return (res);
 }

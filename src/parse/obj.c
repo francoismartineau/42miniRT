@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:57 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/12 15:33:47 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/13 10:04:18 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@
 #include "obj.h"
 #include "def.h"
 
-t_a_light	*parse_a_light(char const *line, int *err)
+t_obj	*parse_a_light(char const *line, int *err)
 {
-	t_a_light	*res;
+	t_obj	*res;
 
 	if (*err == ERROR)
 		return (NULL);
 	res = ft_malloc(sizeof(*res));
+	res->type = e_a_light;
 	res->ratio = parse_double(&line, err, positive_normalized);
 	res->color = parse_color(&line, err);
 	if (*err == ERROR)
@@ -30,32 +31,31 @@ t_a_light	*parse_a_light(char const *line, int *err)
 	return (res);
 }
 
-t_camera	*parse_camera(char const *line, int *err)
+t_obj	*parse_camera(char const *line, int *err)
 {
-	t_camera	*res;
+	t_obj	*res;
 
 	if (*err == ERROR)
 		return (NULL);
 	res = ft_malloc(sizeof(*res));
-	memcopy(res->coord,
-		parse_vec(&line, err, any), 3 * sizeof(*res->coord));
-	memcopy(res->ori,
-		parse_vec(&line, err, signed_normalized), 3 * sizeof(*res->ori));
+	res->type = e_camera;
+	parse_vec(res->coord, &line, err, any);
+	parse_vec(res->ori, &line, err, signed_normalized);
 	res->fov = parse_uint(&line, err, in_fov_range);
 	if (*err == ERROR)
 		return (ft_free((void **) &res));
 	return (res);
 }
 
-t_light	*parse_light(char const *line, int *err)
+t_obj	*parse_light(char const *line, int *err)
 {
-	t_light		*res;
+	t_obj		*res;
 
 	if (*err == ERROR)
 		return (NULL);
 	res = ft_malloc(sizeof(*res));
-	memcopy(res->coord,
-		parse_vec(&line, err, any), 3 * sizeof(*res->coord));
+	res->type = e_light;
+	parse_vec(res->coord, &line, err, any);
 	res->ratio = parse_double(&line, err, positive_normalized);
 	res->color = parse_color(&line, err);
 	if (*err == ERROR)
@@ -63,15 +63,15 @@ t_light	*parse_light(char const *line, int *err)
 	return (res);
 }
 
-t_sphere	*parse_sphere(char const *line, int *err)
+t_obj	*parse_sphere(char const *line, int *err)
 {
-	t_sphere		*res;
+	t_obj		*res;
 
 	if (*err == ERROR)
 		return (NULL);
 	res = ft_malloc(sizeof(*res));
-	memcopy(res->coord,
-		parse_vec(&line, err, any), 3 * sizeof(*res->coord));
+	res->type = e_sphere;
+	parse_vec(res->coord, &line, err, any);
 	res->diam = parse_double(&line, err, positive);
 	res->color = parse_color(&line, err);
 	if (*err == ERROR)

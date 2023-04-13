@@ -19,6 +19,8 @@
 # define ID_SPHERE "sp"
 # define ID_PLANE "pl"
 # define ID_CYLINDER "cy"
+# define OBJ_QTY 6
+
 
 // ratio: 0,1
 typedef struct s_a_light
@@ -62,7 +64,7 @@ typedef struct s_plane
 typedef struct s_cylinder
 {
 	double			coord[3];
-	double			axis;
+	double			axis[3];
 	double			diam;
 	double			height;
 	int				color;
@@ -70,12 +72,12 @@ typedef struct s_cylinder
 
 typedef enum e_type
 {
-	t_a_light,
-	t_camera,
-	t_light,
-	t_sphere,
-	t_plane
-	t_cylinder,
+	e_a_light,
+	e_camera,
+	e_light,
+	e_sphere,
+	e_plane,
+	e_cylinder,
 }	t_type;
 
 typedef struct s_obj
@@ -84,7 +86,7 @@ typedef struct s_obj
 	double			coord[3];
 	double			ori[3];
 	double			ratio;
-	double			axis;
+	double			axis[3];
 	double			diam;
 	double			height;
 	int				color;

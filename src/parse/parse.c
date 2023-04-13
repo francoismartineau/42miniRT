@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:47 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/12 15:37:48 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/13 13:12:00 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,37 +30,71 @@ static int	is_type(char const **line, char const *type)
 	return (res);
 }
 
-void	parse_line(char const *line, int *err)
+static t_obj_parser	get_obj_parser(char const **line)
 {
-	skip_spaces(&line);
-	if (is_type(&line, ID_A_LIGHT))
-		parse_a_light(line, err);
-	else if (is_type(&line, ID_CAMERA))
-		parse_camera(line, err);
-	else if (is_type(&line, ID_LIGHT))
-		parse_light(line, err);
-	else if (is_type(&line, ID_SPHERE))
-		parse_sphere(line, err);
-	else if (is_type(&line, ID_PLANE))
-		parse_plane(line, err);
-	else if (is_type(&line, ID_CYLINDER))
-		parse_cylinder(line, err);
+	size_t				i;
+	const char *const	types[OBJ_QTY] = {ID_A_LIGHT, ID_CAMERA,
+		ID_LIGHT, ID_SPHERE, ID_PLANE, ID_CYLINDER};
+	const t_obj_parser	funcs[OBJ_QTY] = {parse_a_light, parse_camera,
+		parse_light, parse_sphere, parse_plane, parse_cylinder};
+
+	i = 0;
+	while (i < OBJ_QTY)
+	{
+		if (is_type(line, types[i]))
+			return (funcs[i]);
+		++i;
+	}
+	return (NULL);
 }
 
-void	parse_file(char const *path)
+static t_obj	**append_objs(t_obj **objs, t_obj *new)
+{
+	size_t	len;
+	t_obj	**res;
+
+	if (!new)
+		return (objs);
+	len = 0;
+	while (objs && objs[len])
+		++len;
+	res = ft_malloc(sizeof(*res) * (len + 2));
+	res[len + 1] = NULL;
+	res[len] = new;
+	memcopy(res, objs, sizeof(*res) * len);
+	return (res);
+}
+
+t_obj	*parse_line(char *line, int *err)
+{
+	skip_spaces((const char **) &line);
+	return (get_obj_parser((const char **) &line)(line, err));
+}
+
+t_obj	**parse_file(char const *path)
 {
 	const int	fd = open(path, O_RDONLY);
 	char		*line;
 	int			err;
+	t_obj		*obj;
+	t_obj		**res;
 
 	err = SUCCESS;
+	res = NULL;
 	while (err != ERROR)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		parse_line(line, &err);
+		obj = parse_line(line, &err);
 		free(line);
+		if (err == ERROR)
+		{
+			free_objs(res);
+			break ;
+		}
+		res = append_objs(res, obj);
 	}
 	close(fd);
+	return (res);
 }

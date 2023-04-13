@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:25:23 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/12 14:28:20 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/13 08:56:07 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 
 # include "obj.h"
 
-t_a_light	*parse_a_light(char const *line, int *err);
-t_camera	*parse_camera(char const *line, int *err);
-t_light		*parse_light(char const *line, int *err);
-t_sphere	*parse_sphere(char const *line, int *err);
-t_plane		*parse_plane(char const *line, int *err);
-t_cylinder	*parse_cylinder(char const *line, int *err);
+typedef t_obj	*(*t_obj_parser)(char const *, int *);
+
+t_obj	*parse_a_light(char const *line, int *err);
+t_obj	*parse_camera(char const *line, int *err);
+t_obj	*parse_light(char const *line, int *err);
+t_obj	*parse_sphere(char const *line, int *err);
+t_obj	*parse_plane(char const *line, int *err);
+t_obj	*parse_cylinder(char const *line, int *err);
+void	free_objs(t_obj **objs);
 
 #endif
