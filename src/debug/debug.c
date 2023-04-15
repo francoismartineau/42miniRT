@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 08:30:10 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/13 16:03:37 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/14 07:38:08 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,23 @@ void	assert(char const *str, int res)
 	}
 }
 
+// int		fd;
+// t_obj	**objs;
+
+// fd = open(FILE1, O_WRONLY | O_TRUNC | O_CREAT, 0666);
+// if (fd == ERROR)
+// 	return ;
+// write(fd, STR1, strln(STR1));
+// close(fd);
+// objs = parse_file(FILE1);
+// free_objs(objs);
 void	debug(void)
 {
-	int		fd;
-	t_obj	**objs;
+	t_obj	*obj;
+	int		err;
 
-	fd = open(FILE1, O_WRONLY | O_TRUNC | O_CREAT, 0666);
-	if (fd == ERROR)
-		return ;
-	write(fd, STR1, strln(STR1));
-	close(fd);
-	objs = parse_file(FILE1);
-	free_objs(objs);
+	obj = parse_line("A	0.2			255,255,255\n", &err);
+	printf("type: %d, ratio: %f, color: %d\n", obj->type,
+		obj->a_light.ratio, obj->a_light.color);
+	free(obj);
 }

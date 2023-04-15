@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:56:11 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/13 10:03:06 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/14 07:36:02 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "parse_obj.h"
 
+t_obj			*parse_line(char *line, int *err);
 t_obj			**parse_file(char const *path);
 int				parse_color(char const **str, int *err);
 double			parse_double(char const **str, int *err, int in_range(double));
