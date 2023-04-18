@@ -23,6 +23,8 @@
 
 # include "def.h"
 
+# include "util/vec3.h"
+
 // ratio: 0,1
 typedef struct s_a_light
 {
@@ -32,7 +34,7 @@ typedef struct s_a_light
 
 typedef struct s_camera
 {
-	FPR				coord[3];
+	t_vec3			pos;
 	FPR				ori[3];
 	unsigned int	fov;
 }	t_camera;
@@ -40,22 +42,22 @@ typedef struct s_camera
 // ratio: 0,1
 typedef struct s_light
 {
-	FPR				coord[3];
+	t_vec3			pos;
 	FPR				ratio;
 	int				color;
 }	t_light;
 
 typedef struct s_sphere
 {
-	FPR				coord[3];
-	FPR				diam;
+	t_vec3			pos;
+	FPR				rad;
 	int				color;
 }	t_sphere;
 
 // ori: -1,1
 typedef struct s_plane
 {
-	FPR				coord[3];
+	t_vec3			pos;
 	FPR				ori[3];
 	int				color;
 }	t_plane;
@@ -64,9 +66,9 @@ typedef struct s_plane
 // axis: -1,1
 typedef struct s_cylinder
 {
-	FPR				coord[3];
+	t_vec3			pos;
 	FPR				axis[3];
-	FPR				diam;
+	FPR				rad;
 	FPR				height;
 	int				color;
 }	t_cylinder;

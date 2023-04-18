@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   context.h                                          :+:      :+:    :+:   */
+/*   raycast.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/18 07:36:08 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/18 08:44:54 by eboyce-n         ###   ########.fr       */
+/*   Created: 2023/04/18 11:05:18 by eboyce-n          #+#    #+#             */
+/*   Updated: 2023/04/18 12:52:13 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONTEXT_H
-# define CONTEXT_H
+#ifndef RAYCAST_H
+# define RAYCAST_H
 
-# include <MLX42/MLX42.h>
+# include "obj.h"
+# include "util/vec3.h"
 
-typedef struct s_context
+typedef struct s_ray
 {
-	int			width;
-	int			height;
-	mlx_t		*mlx;
-	mlx_image_t	*fb;
-}	t_context;
+	t_vec3	pos;
+	t_vec3	dir;
+}	t_ray;
 
-int		context_new(t_context *ctx, int width, int height);
-void	context_free(t_context *ctx);
+FPR	ray_intersect(const t_ray ray, const t_obj *obj);
 
 #endif

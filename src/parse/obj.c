@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:57 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/13 15:56:58 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:17:33 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_obj	*parse_sphere(char const *line, int *err)
 	res = ft_malloc(sizeof(*res));
 	res->type = e_sphere;
 	parse_vec(res->sphere.coord, &line, err, any);
-	res->sphere.diam = parse_double(&line, err, positive);
+	res->sphere.rad = parse_double(&line, err, positive) / 2.0;
 	res->sphere.color = parse_color(&line, err);
 	if (*err == ERROR)
 		return (ft_free((void **) &res));

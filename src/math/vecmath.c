@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   context.h                                          :+:      :+:    :+:   */
+/*   vecmath.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/18 07:36:08 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/18 08:44:54 by eboyce-n         ###   ########.fr       */
+/*   Created: 2023/04/18 13:38:39 by eboyce-n          #+#    #+#             */
+/*   Updated: 2023/04/18 13:38:54 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONTEXT_H
-# define CONTEXT_H
+#include <math.h>
 
-# include <MLX42/MLX42.h>
+#include "util/vec3.h"
 
-typedef struct s_context
+static FPR	vec3_length(const t_vec3 v)
 {
-	int			width;
-	int			height;
-	mlx_t		*mlx;
-	mlx_image_t	*fb;
-}	t_context;
+	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+}
 
-int		context_new(t_context *ctx, int width, int height);
-void	context_free(t_context *ctx);
+t_vec3	vec3_normalize(const t_vec3 v)
+{
+	FPR		len;
+	t_vec3	n;
 
-#endif
+	len = vec3_length(v);
+	n.x = v.x / len;
+	n.y = v.y / len;
+	n.z = v.z / len;
+	return (n);
+}

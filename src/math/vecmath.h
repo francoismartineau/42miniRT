@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   context.h                                          :+:      :+:    :+:   */
+/*   vecmath.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/18 07:36:08 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/18 08:44:54 by eboyce-n         ###   ########.fr       */
+/*   Created: 2023/04/18 13:36:17 by eboyce-n          #+#    #+#             */
+/*   Updated: 2023/04/18 13:37:48 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONTEXT_H
-# define CONTEXT_H
+#ifndef VECMATH_H
+# define VECMATH_H
 
-# include <MLX42/MLX42.h>
+# include "util/vec3.h"
 
-typedef struct s_context
-{
-	int			width;
-	int			height;
-	mlx_t		*mlx;
-	mlx_image_t	*fb;
-}	t_context;
-
-int		context_new(t_context *ctx, int width, int height);
-void	context_free(t_context *ctx);
+FPR			vec3_dot(const t_vec3 v1, const t_vec3 v2);
+static FPR	vec3_length(const t_vec3 v);
+t_vec3		vec3_normalize(const t_vec3 v);
 
 #endif

@@ -46,7 +46,7 @@ t_obj	*parse_cylinder(char const *line, int *err)
 	res->type = e_cylinder;
 	parse_vec(res->cylinder.coord, &line, err, any);
 	parse_vec(res->cylinder.axis, &line, err, signed_normalized);
-	res->cylinder.diam = parse_double(&line, err, positive);
+	res->cylinder.rad = parse_double(&line, err, positive) / 2;
 	res->cylinder.height = parse_double(&line, err, positive);
 	res->cylinder.color = parse_color(&line, err);
 	if (*err == ERROR)

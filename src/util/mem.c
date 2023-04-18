@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 11:07:46 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/12 13:15:11 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/18 08:37:00 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,16 @@ void	*memcopy(void *dst, const void *src, size_t n)
 		i++;
 	}
 	return (dst);
+}
+
+void	ft_memset(void *b, int c, size_t len)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < len)
+	{
+		((unsigned char *)b)[i] = (unsigned char)c;
+		i++;
+	}
 }
