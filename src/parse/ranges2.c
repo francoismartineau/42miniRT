@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   context.h                                          :+:      :+:    :+:   */
+/*   ranges2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/18 07:36:08 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/18 16:30:17 by francoma         ###   ########.fr       */
+/*   Created: 2023/04/12 12:55:05 by francoma          #+#    #+#             */
+/*   Updated: 2023/04/18 16:24:36 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONTEXT_H
-# define CONTEXT_H
+#include "def.h"
 
-# include "MLX42/MLX42.h"
-# include "obj.h"
-
-typedef struct s_context
+int	is_uchar(FPR n)
 {
-	int			width;
-	int			height;
-	mlx_t		*mlx;
-	mlx_image_t	*fb;
-	t_scene		scene;
-}	t_context;
-
-int		context_new(t_context *ctx, int width, int height);
-void	context_free(t_context *ctx);
-
-#endif
+	return (n <= 255);
+}

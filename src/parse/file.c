@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:47 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 15:14:10 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/18 16:19:19 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "util/util.h"
 #include "parse/parse.h"
 #include "def.h"
-#include "scene.h"
+#include "obj.h"
 
 static int	is_type(char const **line, char const *type)
 {
@@ -48,10 +48,10 @@ static t_obj_parser	get_obj_parser(char const **line)
 	return (NULL);
 }
 
-static t_obj	*parse_line(char *line, int *err, t_scene *scene)
+static void	parse_line(char *line, int *err, t_scene *scene)
 {
 	skip_spaces((const char **) &line);
-	return (get_obj_parser((const char **) &line)(line, err, scene));
+	get_obj_parser((const char **) &line)(line, err, scene);
 }
 
 int	parse_file(char const *path, t_scene *scene)
@@ -59,7 +59,6 @@ int	parse_file(char const *path, t_scene *scene)
 	const int	fd = open(path, O_RDONLY);
 	char		*line;
 	int			err;
-	t_obj		*obj;
 
 	if (fd == ERROR)
 		return (ERROR);
@@ -70,7 +69,7 @@ int	parse_file(char const *path, t_scene *scene)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		obj = parse_line(line, &err, scene);
+		parse_line(line, &err, scene);
 		free(line);
 		if (err == ERROR)
 		{

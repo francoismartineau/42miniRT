@@ -1,10 +1,21 @@
-SRC_FILES	=	main.c \
+SRC_FILES	=	exit.c \
+				main.c \
+				math/vecmath.c \
+				parse/file.c \
+				parse/file2.c \
+				parse/file3.c \
+				parse/ranges.c \
+				parse/ranges2.c \
+				parse/scene.c \
+				parse/scene2.c \
 				render/context.c \
 				render/raycast.c \
-				util/vec3.c \
+				util/atod.c \
+				util/get_next_line/get_next_line.c \
+				util/get_next_line/get_next_line_utils.c \
 				util/mem.c \
-				math/vecmath.c \
-				exit.c
+				util/str.c \
+				util/vec3.c
 
 SRC_DIR		=	src
 

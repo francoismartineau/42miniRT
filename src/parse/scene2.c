@@ -6,14 +6,14 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:19:25 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 15:08:02 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/18 16:29:15 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "parse/parse.h"
 #include "util/util.h"
-#include "scene.h"
+#include "obj.h"
 #include "def.h"
 
 void	parse_plane(char const *line, int *err, t_scene *scene)
@@ -21,34 +21,35 @@ void	parse_plane(char const *line, int *err, t_scene *scene)
 	t_obj	*res;
 
 	if (*err == ERROR)
-		return (NULL);
+		return ;
 	res = ft_malloc(sizeof(*res));
 	res->type = e_plane;
 	parse_vec(res->plane.pos.e, &line, err, any);
 	parse_vec(res->plane.ori.e, &line, err, signed_normalized);
-	res->plane.color = parse_color(&line, err);
+	parse_vec(res->plane.color.e, &line, err, is_uchar);
 	if (*err == ERROR)
 		ft_free((void **) &res);
 	else
-		scene->objs = append_scene(scene->objs, res, sizeof(*res));
+		scene->objs = (t_obj **) append_scene((void **) scene->objs, res, sizeof(*res));
 }
 
-t_obj	*parse_cylinder(char const *line, int *err, t_scene *scene)
+void	parse_cylinder(char const *line, int *err, t_scene *scene)
 {
 	t_obj	*res;
 
 	if (*err == ERROR)
-		return (NULL);
+		return ;
 	res = ft_malloc(sizeof(*res));
 	res->type = e_cylinder;
 	parse_vec(res->cylinder.pos.e, &line, err, any);
 	parse_vec(res->cylinder.axis.e, &line, err, signed_normalized);
 	res->cylinder.rad = parse_double(&line, err, positive) / 2;
 	res->cylinder.height = parse_double(&line, err, positive);
-	res->cylinder.color = parse_color(&line, err);
+	parse_vec(res->cylinder.color.e, &line, err, is_uchar);
 	if (*err == ERROR)
-		return (ft_free((void **) &res));
-	return (res);
+		ft_free((void **) &res);
+	else
+		scene->objs = (t_obj **) append_scene((void **) scene->objs, res, sizeof(*res));
 }
 
 void	**append_scene(void **src, void *new, size_t size)
@@ -75,8 +76,8 @@ void	free_scene(t_scene *scene)
 
 	i = -1;
 	while (scene->lights[++i])
-		scene->lights[i] = ft_free(&scene->lights[i]);
+		scene->lights[i] = ft_free((void *) &scene->lights[i]);
 	i = -1;
 	while (scene->objs[++i])
-		scene->objs[i] = ft_free(&scene->lights[i]);
+		scene->objs[i] = ft_free((void *) &scene->lights[i]);
 }

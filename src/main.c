@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 09:44:33 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 16:10:38 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/18 16:29:36 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include <unistd.h>
 #include "render/context.h"
 #include "render/raycast.h"
-// #include "util/util.h"
-
-	// parse_file("file.rt");
+#include "math/vecmath.h"
+#include "exit.h"
+#include "parse/parse.h"
 
 #include <math.h>
 
@@ -27,9 +27,9 @@ void	loop(void *param)
 	FPR				t;
 	++ii;
 	int				color;
-	const t_obj		sph[3] = {{.type = e_sphere, .sphere = {.pos = {.x = 0, .y = 0.6, .z = -1.0}, .rad = 0.2, .colorv = {{{1.0, 0.1, 0.1}}}}},
-		{.type = e_sphere, .sphere = {.pos = {.x = -0.3, .y = 0.1, .z = -1.2}, .rad = 0.3, .colorv = {{{0.1, 0.1, 1.0}}}}},
-		{.type = e_sphere, .sphere = {.pos = {.x = 1, .y = -0.2, .z = -1.0}, .rad = 0.5, .colorv = {{{1.0, 1.0, 1.0}}}}}};
+	const t_obj		sph[3] = {{.type = e_sphere, .sphere = {.pos = {.x = 0, .y = 0.6, .z = -1.0}, .rad = 0.2, .color = {{{1.0, 0.1, 0.1}}}}},
+		{.type = e_sphere, .sphere = {.pos = {.x = -0.3, .y = 0.1, .z = -1.2}, .rad = 0.3, .color = {{{0.1, 0.1, 1.0}}}}},
+		{.type = e_sphere, .sphere = {.pos = {.x = 1, .y = -0.2, .z = -1.0}, .rad = 0.5, .color = {{{1.0, 1.0, 1.0}}}}}};
 	const t_vec3	light = {{{0, 0, sin(ii * 0.1) * 1.0 - 0.5}}};
 	const t_vec3	lcolor = {{{1, 1, 1}}};
 	const t_vec3	ambient = {{{0.05, 0.05, 0.05}}};
@@ -60,7 +60,7 @@ void	loop(void *param)
 			{
 				const t_vec3	light_dir = vec3_normalize(vec3_sub(light, hit));
 				const FPR		diffuse = fmax(0.0, vec3_dot(light_dir, n));
-				const t_vec3	diffuse_color = vec3_mult(vec3_scale(lcolor, diffuse), sphere->colorv);
+				const t_vec3	diffuse_color = vec3_mult(vec3_scale(lcolor, diffuse), sphere->color);
 				const t_vec3	colorv = vec3_add(vec3_scale(diffuse_color, 0.7), ambient);
 				color = (int)(colorv.x * 255) << 24 | (int)(colorv.y * 255) << 16 | (int)(colorv.z * 255) << 8 | 0xFF;
 			}
