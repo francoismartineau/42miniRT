@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   def.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 11:24:49 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/12 11:53:22 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/18 08:00:09 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,7 @@
 
 # define ERROR -1
 # define SUCCESS 0
+
+# define FPR float
 
 #endif

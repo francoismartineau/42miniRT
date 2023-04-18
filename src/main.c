@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 09:44:33 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/13 09:02:32 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/18 07:43:59 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "parse/parse.h"
-#include "debug/debug.h"
+#include "render/context.h"
 // #include "util/util.h"
 
 	// parse_file("file.rt");
@@ -20,6 +19,5 @@ int	main(int argc, char const *argv[])
 {
 	(void) argc;
 	(void) argv;
-	debug();
 	return (0);
 }

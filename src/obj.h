@@ -21,41 +21,42 @@
 # define ID_CYLINDER "cy"
 # define OBJ_QTY 6
 
+# include "def.h"
 
 // ratio: 0,1
 typedef struct s_a_light
 {
-	double	ratio;
+	FPR		ratio;
 	int		color;
 }	t_a_light;
 
 typedef struct s_camera
 {
-	double			coord[3];
-	double			ori[3];
+	FPR				coord[3];
+	FPR				ori[3];
 	unsigned int	fov;
 }	t_camera;
 
 // ratio: 0,1
 typedef struct s_light
 {
-	double			coord[3];
-	double			ratio;
+	FPR				coord[3];
+	FPR				ratio;
 	int				color;
 }	t_light;
 
 typedef struct s_sphere
 {
-	double			coord[3];
-	double			diam;
+	FPR				coord[3];
+	FPR				diam;
 	int				color;
 }	t_sphere;
 
 // ori: -1,1
 typedef struct s_plane
 {
-	double			coord[3];
-	double			ori[3];
+	FPR				coord[3];
+	FPR				ori[3];
 	int				color;
 }	t_plane;
 
@@ -63,10 +64,10 @@ typedef struct s_plane
 // axis: -1,1
 typedef struct s_cylinder
 {
-	double			coord[3];
-	double			axis[3];
-	double			diam;
-	double			height;
+	FPR				coord[3];
+	FPR				axis[3];
+	FPR				diam;
+	FPR				height;
 	int				color;
 }	t_cylinder;
 
@@ -95,9 +96,9 @@ typedef struct s_obj
 }	t_obj;
 
 int	in_fov_range(unsigned int n);
-int	positive_normalized(double n);
-int	signed_normalized(double n);
-int	any(double n);
-int	positive(double n);
+int	positive_normalized(FPR n);
+int	signed_normalized(FPR n);
+int	any(FPR n);
+int	positive(FPR n);
 
 #endif

@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ranges.c                                           :+:      :+:    :+:   */
+/*   vec3.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/12 12:55:05 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 08:02:33 by eboyce-n         ###   ########.fr       */
+/*   Created: 2023/04/18 07:44:23 by eboyce-n          #+#    #+#             */
+/*   Updated: 2023/04/18 07:59:59 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "def.h"
+#ifndef VEC3_H
+# define VEC3_H
 
-int	in_fov_range(unsigned int n)
-{
-	return (n <= 180);
-}
+# include "def.h"
 
-int	positive_normalized(FPR n)
+typedef struct s_vec3
 {
-	return (n >= 0 && n <= 1);
-}
+	union
+	{
+		struct
+		{
+			FPR	x;
+			FPR	y;
+			FPR	z;
+		};
+		FPR	e[3];
+	};
+}	t_vec3;
 
-int	signed_normalized(FPR n)
-{
-	return (n >= -1 && n <= 1);
-}
+// double	vec3_length(t_vec3 v);
+// t_vec3	vec3_normalize(t_vec3 v);
+FPR	vec3_dot(t_vec3 v1, t_vec3 v2);
 
-int	positive(FPR n)
-{
-	return (n >= 0);
-}
-
-int	any(FPR n)
-{
-	(void) n;
-	return (1);
-}
+#endif
