@@ -52,6 +52,7 @@ typedef struct s_sphere
 	t_vec3			pos;
 	FPR				rad;
 	int				color;
+	t_vec3			colorv;
 }	t_sphere;
 
 // ori: -1,1

@@ -6,12 +6,13 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:09:35 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/18 13:30:52 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/18 15:22:24 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render/raycast.h"
 #include "def.h"
+#include "math/vecmath.h"
 
 #include <math.h>
 

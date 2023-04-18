@@ -6,35 +6,67 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 09:44:33 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 13:33:25 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/18 15:28:00 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "render/context.h"
 #include "render/raycast.h"
+#include "math/vecmath.h"
 // #include "util/util.h"
 
 	// parse_file("file.rt");
 
+#include <math.h>
+
 void	loop(void *param)
 {
 	const t_context	*ctx = param;
-	const t_obj		sph = {.type = e_sphere,
-		.sphere = {.pos = {.x = 0, .y = 0, .z = 0.5}, .rad = 0.2}};
-	const t_vec3	light = {{{0.5, 0.1, 0.1}}};
+	static int		i = 0;
+	FPR				t;
+	++i;
+	int				color;
+	const t_obj		sph[3] = {{.type = e_sphere, .sphere = {.pos = {.x = 0, .y = 0.6, .z = -1.0}, .rad = 0.2, .colorv = {{{1.0, 0.1, 0.1}}}}},
+		{.type = e_sphere, .sphere = {.pos = {.x = -0.3, .y = 0.1, .z = -1.2}, .rad = 0.3, .colorv = {{{0.1, 0.1, 1.0}}}}},
+		{.type = e_sphere, .sphere = {.pos = {.x = 1, .y = -0.2, .z = -1.0}, .rad = 0.5, .colorv = {{{1.0, 1.0, 1.0}}}}}};
+	const t_vec3	light = {{{0, 0, sin(i * 0.1) * 1.0 - 0.5}}};
+	const t_vec3	lcolor = {{{1, 1, 1}}};
+	const t_vec3	ambient = {{{0.1, 0.1, 0.1}}};
 
 	for (int i = 0; i < ctx->height; i++)
 	{
 		for (int j = 0; j < ctx->width; j++)
 		{
 			const t_ray	ray = {.pos = {{{0, 0, 0}}},
-				.dir = vec3_normalize((t_vec3){{{(FPR)j / ctx->height - 0.5, (FPR)i / ctx->height - 0.5, 1.0}}})};
-			const FPR	t = ray_intersect(ray, &sph);
-			const t_vec3	hit = vec3_add(ray.pos, vec3_scale(ray.dir, t));
-			const t_vec3	norm = vec3_normalize(vec3_sub(hit, sph.sphere.pos));
-			const int	color = (int)((norm.x + 1) * 0.5 * 255);
-			mlx_put_pixel(ctx->fb, j, i, color << 16 | color << 8 | color << 24 | 0xFF);
+				.dir = vec3_normalize((t_vec3){{{(FPR)j / ctx->height - 0.5, (FPR)i / ctx->height - 0.5, -0.6}}})};
+			t = 0;
+			int	k;
+			t_vec3	hit;
+			t_vec3	n;
+			const t_sphere	*sphere;
+			for(k = 0; k < 3 && !t; ++k)
+			{
+				const FPR t2 = ray_intersect(ray, &sph[k]);
+				if (t2 > 0.0 && (t == 0.0 || t2 < t))
+				{
+					t = t2;
+					hit = vec3_add(ray.pos, vec3_scale(ray.dir, t));
+					n = vec3_normalize(vec3_sub(hit, sph[k].sphere.pos));
+					sphere = &sph[k].sphere;
+				}
+			}
+			if (t)
+			{
+				const t_vec3	light_dir = vec3_normalize(vec3_sub(light, hit));
+				const FPR		diffuse = fmax(0.0, vec3_dot(light_dir, n));
+				const t_vec3	diffuse_color = vec3_mult(vec3_scale(lcolor, diffuse), sphere->colorv);
+				const t_vec3	colorv = vec3_add(vec3_scale(diffuse_color, 0.7), ambient);
+				color = (int)(colorv.x * 255) << 24 | (int)(colorv.y * 255) << 16 | (int)(colorv.z * 255) << 8 | 0xFF;
+			}
+			else
+				color = 0;
+			mlx_put_pixel(ctx->fb, j, i, color);
 		}
 	}
 }
