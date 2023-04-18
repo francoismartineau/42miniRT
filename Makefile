@@ -6,7 +6,6 @@ SRC_FILES	=	main.c \
 				math/vecmath.c \
 				exit.c
 
-
 SRC_DIR		=	src
 
 OBJ_DIR=obj

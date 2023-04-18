@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:47 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/13 16:04:25 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/18 15:14:10 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #include <stdlib.h>
 #include "util/util.h"
 #include "parse/parse.h"
-#include "parse/parse_obj.h"
 #include "def.h"
+#include "scene.h"
 
 static int	is_type(char const **line, char const *type)
 {
@@ -48,54 +48,36 @@ static t_obj_parser	get_obj_parser(char const **line)
 	return (NULL);
 }
 
-static t_obj	**append_objs(t_obj **objs, t_obj *new)
-{
-	size_t	len;
-	t_obj	**res;
-
-	if (!new)
-		return (objs);
-	len = 0;
-	while (objs && objs[len])
-		++len;
-	res = ft_malloc(sizeof(*res) * (len + 2));
-	res[len + 1] = NULL;
-	res[len] = new;
-	memcopy(res, objs, sizeof(*res) * len);
-	free(objs);
-	return (res);
-}
-
-t_obj	*parse_line(char *line, int *err)
+static t_obj	*parse_line(char *line, int *err, t_scene *scene)
 {
 	skip_spaces((const char **) &line);
-	return (get_obj_parser((const char **) &line)(line, err));
+	return (get_obj_parser((const char **) &line)(line, err, scene));
 }
 
-t_obj	**parse_file(char const *path)
+int	parse_file(char const *path, t_scene *scene)
 {
 	const int	fd = open(path, O_RDONLY);
 	char		*line;
 	int			err;
 	t_obj		*obj;
-	t_obj		**res;
 
+	if (fd == ERROR)
+		return (ERROR);
 	err = SUCCESS;
-	res = NULL;
+	(*scene) = (t_scene) {0};
 	while (err != ERROR)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		obj = parse_line(line, &err);
+		obj = parse_line(line, &err, scene);
 		free(line);
 		if (err == ERROR)
 		{
-			free_objs(res);
+			free_scene(scene);
 			break ;
 		}
-		res = append_objs(res, obj);
 	}
 	close(fd);
-	return (res);
+	return (err);
 }
