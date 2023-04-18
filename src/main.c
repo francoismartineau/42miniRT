@@ -3,16 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 09:44:33 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 13:33:25 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/18 16:00:24 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <unistd.h>
 #include "render/context.h"
 #include "render/raycast.h"
+#include "parse/parse.h"
+#include "util/util.h"
+#include "exit.h"
+#include "def.h"
 // #include "util/util.h"
 
 	// parse_file("file.rt");
@@ -45,7 +50,11 @@ int	main(int argc, char const *argv[])
 
 	(void) argc;
 	(void) argv;
+	if (argc != 2)
+		exit_error(MSG_ARG_ERR);
 	context_new(&ctx, 800, 600);
+	if (parse_file(argv[1], &ctx.scene) == ERROR)
+		exit_error(MSG_PARSE_ERR);
 	mlx_loop_hook(ctx.mlx, loop, &ctx);
 	mlx_loop(ctx.mlx);
 	context_free(&ctx);

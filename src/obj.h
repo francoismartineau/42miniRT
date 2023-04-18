@@ -29,13 +29,13 @@
 typedef struct s_a_light
 {
 	FPR		ratio;
-	int		color;
+	t_vec3	color;
 }	t_a_light;
 
 typedef struct s_camera
 {
 	t_vec3			pos;
-	FPR				ori[3];
+	t_vec3			ori;
 	unsigned int	fov;
 }	t_camera;
 
@@ -44,22 +44,22 @@ typedef struct s_light
 {
 	t_vec3			pos;
 	FPR				ratio;
-	int				color;
+	t_vec3			color;
 }	t_light;
 
 typedef struct s_sphere
 {
 	t_vec3			pos;
 	FPR				rad;
-	int				color;
+	t_vec3			color;
 }	t_sphere;
 
 // ori: -1,1
 typedef struct s_plane
 {
 	t_vec3			pos;
-	FPR				ori[3];
-	int				color;
+	t_vec3			ori;
+	t_vec3			color;
 }	t_plane;
 
 // coord: cylinder's center
@@ -67,10 +67,10 @@ typedef struct s_plane
 typedef struct s_cylinder
 {
 	t_vec3			pos;
-	FPR				axis[3];
+	t_vec3			axis;
 	FPR				rad;
 	FPR				height;
-	int				color;
+	t_vec3			color;
 }	t_cylinder;
 
 typedef enum e_type
@@ -91,16 +91,15 @@ typedef struct s_obj
 		t_cylinder	cylinder;
 		t_plane		plane;
 		t_sphere	sphere;
-		t_light		light;
-		t_camera	camera;
-		t_a_light	a_light;
 	};
 }	t_obj;
 
-int	in_fov_range(unsigned int n);
-int	positive_normalized(FPR n);
-int	signed_normalized(FPR n);
-int	any(FPR n);
-int	positive(FPR n);
+typedef struct s_scene
+{
+	t_light		**lights;
+	t_obj		**objs;
+	t_a_light	a_light;
+	t_camera	camera;
+}	t_scene;
 
 #endif

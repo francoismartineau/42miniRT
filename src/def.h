@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   def.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 11:24:49 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 08:00:09 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/18 16:00:05 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,8 @@
 # define SUCCESS 0
 
 # define FPR float
+
+#define MSG_ARG_ERR "miniRT: usage: ./miniRT file.rt\n"
+#define MSG_PARSE_ERR "miniRT: bad file format\n"
 
 #endif
