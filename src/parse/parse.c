@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:47 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/13 13:12:00 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/13 16:04:25 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static t_obj	**append_objs(t_obj **objs, t_obj *new)
 	res[len + 1] = NULL;
 	res[len] = new;
 	memcopy(res, objs, sizeof(*res) * len);
+	free(objs);
 	return (res);
 }
 

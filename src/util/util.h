@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:27:11 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/12 14:24:19 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/18 08:09:00 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*strchar(const char *s, int c);
 int		strncmp(const char *s1, const char *s2, size_t n);
 char	*get_next_line(int fd);
 
-double	atod(char const **str);
+FPR		atod(char const **str);
 int		is_digit(char c);
 
 void	*ft_malloc(size_t size);

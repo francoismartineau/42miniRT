@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 08:30:10 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/13 13:32:28 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/18 08:09:09 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	assert(char const *str, int res)
 	}
 }
 
-static int	eq_double(double a, double b)
+static int	eq_double(FPR a, FPR b)
 {
 	return (a >= b - .1 && a <= b + .1);
 }

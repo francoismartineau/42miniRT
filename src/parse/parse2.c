@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:29:18 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/13 12:37:16 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/18 08:09:35 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ int	parse_color(char const **str, int *err)
 	return ((res << 8) | 0xFF);
 }
 
-double	parse_double(char const **str, int *err, int in_range(double))
+FPR	parse_double(char const **str, int *err, int in_range(FPR))
 {
-	double	res;
+	FPR	res;
 
 	skip_spaces(str);
 	if ((**str == '-' && !is_digit((*str)[1]))
@@ -83,8 +83,8 @@ double	parse_double(char const **str, int *err, int in_range(double))
 	return (res);
 }
 
-void	parse_vec(double dst[3], char const **str,
-	int *err, int in_range(double))
+void	parse_vec(FPR dst[3], char const **str,
+	int *err, int in_range(FPR))
 {
 	int		i;
 
