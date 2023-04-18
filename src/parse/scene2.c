@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:19:25 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 16:29:15 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/18 16:53:01 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	parse_plane(char const *line, int *err, t_scene *scene)
 	res->type = e_plane;
 	parse_vec(res->plane.pos.e, &line, err, any);
 	parse_vec(res->plane.ori.e, &line, err, signed_normalized);
-	parse_vec(res->plane.color.e, &line, err, is_uchar);
+	parse_color(res->plane.color.e, &line, err);
 	if (*err == ERROR)
 		ft_free((void **) &res);
 	else
@@ -45,7 +45,7 @@ void	parse_cylinder(char const *line, int *err, t_scene *scene)
 	parse_vec(res->cylinder.axis.e, &line, err, signed_normalized);
 	res->cylinder.rad = parse_double(&line, err, positive) / 2;
 	res->cylinder.height = parse_double(&line, err, positive);
-	parse_vec(res->cylinder.color.e, &line, err, is_uchar);
+	parse_color(res->cylinder.color.e, &line, err);
 	if (*err == ERROR)
 		ft_free((void **) &res);
 	else

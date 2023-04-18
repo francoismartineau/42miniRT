@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atod.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:26:56 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 07:59:17 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/18 17:30:32 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ FPR	atod(char const **str)
 		++(*str);
 	sign = (**str == '-') * -2 + 1;
 	*str += (**str == '-');
-	integral = extract_integral(str);
+	if (**str != '.')
+		integral = extract_integral(str);
+	else
+		integral = 0;
 	if (**str != '.')
 		return (sign * integral);
 	++*str;

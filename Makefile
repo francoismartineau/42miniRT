@@ -25,7 +25,7 @@ OBJ:=$(addprefix $(OBJ_DIR)/,$(SRC_FILES:.c=.o))
 NAME=miniRT
 
 CC=gcc
-CCFLAGS=-Wall -Wextra -Wpedantic -Werror -Isrc -Imlx/include
+CFLAGS=-Wall -Wextra -Wpedantic -Werror -Isrc -Imlx/include
 LDFLAGS=-Lmlx
 LDLIBS=-lmlx42 -framework OpenGL -framework AppKit -framework IOKit -lglfw3
 
@@ -33,17 +33,20 @@ all: mlx $(NAME)
 
 bonus: all
 
-noerr: CCFLAGS:=$(subst -Werror,,$(CCFLAGS))
+mlx:
+	$(MAKE) "DEBUG=1" -C mlx
+
+noerr: CFLAGS:=$(subst -Werror,,$(CFLAGS))
 noerr: all
 
-sanit: CCFLAGS+=-g -O0 -fsanitize=address
+sanit: CFLAGS+=-g -O0 -fsanitize=address
 sanit: LDFLAGS+=-fsanitize=address
 sanit: re
 
-debug: CCFLAGS+=-g -O0
+debug: CFLAGS+=-g -O0
 debug: re
 
-rel: CCFLAGS+=-O2
+rel: CFLAGS+=-O2
 rel: re
 
 clean:
@@ -56,7 +59,7 @@ re: fclean all
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CCFLAGS) -c -o $@ $< -MMD
+	$(CC) $(CFLAGS) -c -o $@ $< -MMD
 
 $(NAME): $(OBJ)
 	$(CC) $(LDFLAGS) $(LDLIBS) $^ -o $(NAME)

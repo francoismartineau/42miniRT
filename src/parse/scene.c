@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:57 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 16:26:50 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/18 17:39:50 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	parse_camera(char const *line, int *err, t_scene *scene)
 	scene->camera.fov = parse_uint(&line, err, in_fov_range);
 }
 
+#include <stdio.h>
 void	parse_light(char const *line, int *err, t_scene *scene)
 {
 	t_light		*res;
@@ -41,8 +42,9 @@ void	parse_light(char const *line, int *err, t_scene *scene)
 		return ;
 	res = ft_malloc(sizeof(*res));
 	parse_vec(res->pos.e, &line, err, any);
+	printf("light: %f, %f, %f\n", res->pos.e[0], res->pos.e[1], res->pos.e[2]);
 	res->ratio = parse_double(&line, err, positive_normalized);
-	parse_vec(res->color.e, &line, err, is_uchar);
+	parse_color(res->color.e, &line, err);
 	if (*err == ERROR)
 		ft_free((void **) &res);
 	else

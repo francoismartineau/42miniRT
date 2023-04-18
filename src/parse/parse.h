@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:56:11 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 16:24:49 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/18 16:53:29 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void			parse_sphere(char const *line, int *err, t_scene *scene);
 void			parse_plane(char const *line, int *err, t_scene *scene);
 void			parse_cylinder(char const *line, int *err, t_scene *scene);
 
-int				parse_color(char const **str, int *err);
+void			parse_color(FPR dst[3], char const **str, int *err);
 FPR				parse_double(char const **str, int *err, int in_range(FPR));
 void			parse_vec(FPR dst[3], char const **str,
 					int *err, int in_range(FPR));
