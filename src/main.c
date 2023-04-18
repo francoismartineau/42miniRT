@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 09:44:33 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 15:28:00 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/18 15:47:02 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,22 @@
 void	loop(void *param)
 {
 	const t_context	*ctx = param;
-	static int		i = 0;
+	static int		ii = 0;
 	FPR				t;
-	++i;
+	++ii;
 	int				color;
 	const t_obj		sph[3] = {{.type = e_sphere, .sphere = {.pos = {.x = 0, .y = 0.6, .z = -1.0}, .rad = 0.2, .colorv = {{{1.0, 0.1, 0.1}}}}},
 		{.type = e_sphere, .sphere = {.pos = {.x = -0.3, .y = 0.1, .z = -1.2}, .rad = 0.3, .colorv = {{{0.1, 0.1, 1.0}}}}},
 		{.type = e_sphere, .sphere = {.pos = {.x = 1, .y = -0.2, .z = -1.0}, .rad = 0.5, .colorv = {{{1.0, 1.0, 1.0}}}}}};
-	const t_vec3	light = {{{0, 0, sin(i * 0.1) * 1.0 - 0.5}}};
+	const t_vec3	light = {{{0, 0, sin(ii * 0.1) * 1.0 - 0.5}}};
 	const t_vec3	lcolor = {{{1, 1, 1}}};
-	const t_vec3	ambient = {{{0.1, 0.1, 0.1}}};
+	const t_vec3	ambient = {{{0.05, 0.05, 0.05}}};
 
 	for (int i = 0; i < ctx->height; i++)
 	{
 		for (int j = 0; j < ctx->width; j++)
 		{
-			const t_ray	ray = {.pos = {{{0, 0, 0}}},
+			const t_ray	ray = {.pos = {{{sin(ii * 0.07) * 0.7, 0, 0}}},
 				.dir = vec3_normalize((t_vec3){{{(FPR)j / ctx->height - 0.5, (FPR)i / ctx->height - 0.5, -0.6}}})};
 			t = 0;
 			int	k;
@@ -65,7 +65,7 @@ void	loop(void *param)
 				color = (int)(colorv.x * 255) << 24 | (int)(colorv.y * 255) << 16 | (int)(colorv.z * 255) << 8 | 0xFF;
 			}
 			else
-				color = 0;
+				color = 0xff;
 			mlx_put_pixel(ctx->fb, j, i, color);
 		}
 	}
