@@ -1,17 +1,11 @@
-SRC_FILES	=	debug/debug.c \
-				exit.c \
-				main.c \
-				parse/obj.c \
-				parse/obj2.c \
-				parse/parse.c \
-				parse/parse2.c \
-				parse/parse3.c \
-				ranges.c \
-				util/atod.c \
-				util/get_next_line/get_next_line.c \
-				util/get_next_line/get_next_line_utils.c \
+SRC_FILES	=	main.c \
+				render/context.c \
+				render/raycast.c \
+				util/vec3.c \
 				util/mem.c \
-				util/str.c
+				math/vecmath.c \
+				exit.c
+
 
 SRC_DIR		=	src
 
@@ -21,16 +15,13 @@ OBJ:=$(addprefix $(OBJ_DIR)/,$(SRC_FILES:.c=.o))
 NAME=miniRT
 
 CC=gcc
-CCFLAGS=-Wall -Wextra -Wpedantic -Werror -Isrc
-LDFLAGS=
-LDLIBS=
+CCFLAGS=-Wall -Wextra -Wpedantic -Werror -Isrc -Imlx/include
+LDFLAGS=-Lmlx
+LDLIBS=-lmlx42 -framework OpenGL -framework AppKit -framework IOKit -lglfw3
 
-all: $(NAME)
+all: mlx $(NAME)
 
 bonus: all
-
-norm:
-	norminette src/
 
 noerr: CCFLAGS:=$(subst -Werror,,$(CCFLAGS))
 noerr: all
@@ -55,12 +46,11 @@ re: fclean all
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	@norminette $<
 	$(CC) $(CCFLAGS) -c -o $@ $< -MMD
 
 $(NAME): $(OBJ)
-	$(CC) $^ -o $(NAME) $(LDFLAGS) $(LDLIBS) 
+	$(CC) $(LDFLAGS) $(LDLIBS) $^ -o $(NAME)
 
-.PHONY: clean fclean re all norm
+.PHONY: clean fclean re all mlx
 
 -include $(OBJ:.o=.d)
