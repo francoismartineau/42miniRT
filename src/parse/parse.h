@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:56:11 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 16:53:29 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/19 08:57:29 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int				any(FPR n);
 int				positive(FPR n);
 int				is_uchar(FPR n);
 		
-void			**append_scene(void **src, void *new, size_t size);
+void			append_obj(t_scene *scene, t_obj *new_alloc);
 void			free_scene(t_scene *scene);
 
 #endif

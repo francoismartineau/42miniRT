@@ -1,13 +1,12 @@
 SRC_FILES	=	exit.c \
 				main.c \
 				math/vecmath.c \
+				parse/data_types.c \
 				parse/file.c \
-				parse/file2.c \
-				parse/file3.c \
+				parse/obj.c \
+				parse/obj2.c \
 				parse/ranges.c \
 				parse/ranges2.c \
-				parse/scene.c \
-				parse/scene2.c \
 				render/context.c \
 				render/raycast.c \
 				util/atod.c \
