@@ -6,11 +6,12 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 07:36:06 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/18 17:27:36 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/19 13:00:46 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "context.h"
+#include "parse/parse.h"
 
 #include "util/util.h"
 
@@ -48,6 +49,7 @@ int	context_new(t_context *ctx, int width, int height)
 
 void	context_free(t_context *ctx)
 {
+	free_scene(&ctx->scene);
 	if (ctx->fb)
 		mlx_delete_image(ctx->mlx, ctx->fb);
 	if (ctx->mlx)

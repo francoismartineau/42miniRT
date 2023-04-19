@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 18:56:38 by root              #+#    #+#             */
-/*   Updated: 2023/04/13 07:43:01 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:01:37 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,14 @@ char	*append_buff(char *buf, char *add)
 	m_size = get_buff_mem_size(buf_l + add_l + 1);
 	if (!buf || m_size != get_buff_mem_size(buf_l + 1))
 	{
-		res = malloc(sizeof(*res) * (m_size));
+		res = ft_malloc(sizeof(*res) * (m_size));
 		if (!res)
 		{
-			free(buf);
+			ft_free((void **) &buf);
 			return (NULL);
 		}
 		ft_memmove(res, buf, buf_l);
-		free(buf);
+		ft_free((void **) &buf);
 	}
 	else
 		res = buf;

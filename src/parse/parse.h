@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:56:11 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/19 08:57:29 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/19 10:53:32 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,15 @@ int				signed_normalized(FPR n);
 int				any(FPR n);
 int				positive(FPR n);
 int				is_uchar(FPR n);
-		
+
 void			append_obj(t_scene *scene, t_obj *new_alloc);
 void			free_scene(t_scene *scene);
+
+typedef struct s_parsing_data
+{
+	size_t	line_n;
+	char	*line;
+}	t_parsing_data;
+t_parsing_data	*get_parsing_data(void);
 
 #endif

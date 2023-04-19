@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:27:11 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 08:47:44 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/19 10:55:51 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ size_t	strln(char const *str);
 char	*strchar(const char *s, int c);
 int		strncmp(const char *s1, const char *s2, size_t n);
 char	*get_next_line(int fd);
+char	*intoa(int n);
 
 FPR		atod(char const **str);
 int		is_digit(char c);
