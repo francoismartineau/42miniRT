@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:47 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/19 15:03:00 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:14:28 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ int	parse_file(char const *path, t_scene *scene)
 		}
 	}
 	close(fd);
+	get_next_line(fd);
 	return (err);
 }
