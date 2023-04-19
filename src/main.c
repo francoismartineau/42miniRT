@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 09:44:33 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 17:46:54 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/19 09:23:39 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,13 +131,14 @@ void	loop(void *param)
 	FPR				t;
 	++ii;
 	int				color;
-	const t_obj		sph[3] = {{.type = e_sphere, .sphere = {.pos = {.x = 0, .y = 0.6, .z = -1.0}, .rad = 0.2, .color = {{{1.0, 0.1, 0.1}}}}},
-		{.type = e_sphere, .sphere = {.pos = {.x = -0.3, .y = 0.1, .z = -1.2}, .rad = 0.3, .color = {{{0.1, 0.1, 1.0}}}}},
-		{.type = e_sphere, .sphere = {.pos = {.x = 1, .y = -0.2, .z = -1.0}, .rad = 0.5, .color = {{{1.0, 1.0, 1.0}}}}}};
-	const t_vec3	light = ctx->scene.lights[0]->pos;//{{{0, 0, sin(ii * 0.1) * 1.0 - 0.5}}};
-	printf("light: %f, %f, %f\n", light.e[0], light.e[1], light.e[2]);
-	const t_vec3	lcolor = {{{1, 1, 1}}};
-	const t_vec3	ambient = {{{0.05, 0.05, 0.05}}};
+	const t_obj		*sph = ctx->scene.objs;
+	
+	//{{.type = e_sphere, .sphere = {.pos = {.x = 0, .y = 0.6, .z = -1.0}, .rad = 0.2, .color = {{{1.0, 0.1, 0.1}}}}},
+	//	{.type = e_sphere, .sphere = {.pos = {.x = -0.3, .y = 0.1, .z = -1.2}, .rad = 0.3, .color = {{{0.1, 0.1, 1.0}}}}},
+	//	{.type = e_sphere, .sphere = {.pos = {.x = 1, .y = -0.2, .z = -1.0}, .rad = 0.5, .color = {{{1.0, 1.0, 1.0}}}}}};
+	const t_vec3	light = ctx->scene.lights[0].pos;//{{{0, 0, sin(ii * 0.1) * 1.0 - 0.5}}};
+	const t_vec3	lcolor = ctx->scene.lights[0].color; //{{{1, 1, 1}}};
+	const t_vec3	ambient = ctx->scene.a_light.color; //{{{0.05, 0.05, 0.05}}};
 
 	for (int i = 0; i < ctx->height; i++)
 	{

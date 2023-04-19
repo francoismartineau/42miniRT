@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:47 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 16:19:19 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/19 08:31:52 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 #include "parse/parse.h"
 #include "def.h"
 #include "obj.h"
+
+void	skip_spaces(char const **str)
+{
+	while (**str <= ' ')
+		++(*str);
+}
 
 static int	is_type(char const **line, char const *type)
 {

@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:29:18 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 17:30:43 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/19 08:32:16 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,6 @@
 #include "parse.h"
 #include "util/util.h"
 
-void	skip_spaces(char const **str)
-{
-	while (**str <= ' ')
-		++(*str);
-}
-
-// static int	parse_color_channel(char const **str, int *err)
-// {
-// 	int	res;
-
-// 	if (!is_digit(**str))
-// 		*err = ERROR;
-// 	if (*err == ERROR)
-// 		return (0);
-// 	res = 0;
-// 	while (is_digit(**str) && res <= 255)
-// 	{
-// 		res *= 10;
-// 		res += *(*str)++ - '0';
-// 	}
-// 	if (res > 255)
-// 		*err = ERROR;
-// 	return (res);
-// }
-
 void	parse_color(FPR dst[3], char const **str, int *err)
 {
 	parse_vec(dst, str, err, is_uchar);
@@ -47,31 +22,6 @@ void	parse_color(FPR dst[3], char const **str, int *err)
 	dst[1] /=255;
 	dst[2] /=255;
 }
-
-// int	parse_color(char const **str, int *err)
-// {
-// 	int	i;
-// 	int	res;
-// 	int	chan;
-
-// 	if (*err == ERROR)
-// 		return (0);
-// 	skip_spaces(str);
-// 	i = 0;
-// 	res = 0;
-// 	while (i < 3)
-// 	{
-// 		chan = parse_color_channel(str, err);
-// 		if (i < 2 && **str != ',')
-// 			*err = ERROR;
-// 		if (*err == ERROR)
-// 			return (0);
-// 		*str += **str == ',';
-// 		res = (res << 8) + chan;
-// 		++i;
-// 	}
-// 	return ((res << 8) | 0xFF);
-// }
 
 FPR	parse_double(char const **str, int *err, int in_range(FPR))
 {
@@ -111,4 +61,22 @@ void	parse_vec(FPR dst[3], char const **str,
 		*str += (i < 2);
 		++i;
 	}
+}
+
+unsigned int	parse_uint(char const **str, int *err,
+	int in_range(unsigned int))
+{
+	unsigned int	res;
+
+	skip_spaces(str);
+	if (!is_digit(**str))
+		*err = ERROR;
+	if (*err == ERROR)
+		return (0);
+	res = 0;
+	while (is_digit(**str) && in_range(res))
+		res = (res * 10) + *(*str)++ - '0';
+	if (!in_range(res))
+		*err = ERROR;
+	return (res);
 }

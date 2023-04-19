@@ -96,8 +96,10 @@ typedef struct s_obj
 
 typedef struct s_scene
 {
-	t_light		**lights;
-	t_obj		**objs;
+	t_light		*lights;
+	size_t		lightc;
+	t_obj		*objs;
+	size_t		objc;
 	t_a_light	a_light;
 	t_camera	camera;
 }	t_scene;

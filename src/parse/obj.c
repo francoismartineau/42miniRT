@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scene.c                                            :+:      :+:    :+:   */
+/*   obj.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:57 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 17:39:50 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/19 09:17:46 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	parse_a_light(char const *line, int *err, t_scene *scene)
 	if (*err == ERROR)
 		return ;
 	scene->a_light.ratio = parse_double(&line, err, positive_normalized);
-	parse_vec(scene->a_light.color.e, &line, err, is_uchar);
+	parse_color(scene->a_light.color.e, &line, err);
 }
 
 void	parse_camera(char const *line, int *err, t_scene *scene)
@@ -33,22 +33,22 @@ void	parse_camera(char const *line, int *err, t_scene *scene)
 	scene->camera.fov = parse_uint(&line, err, in_fov_range);
 }
 
-#include <stdio.h>
 void	parse_light(char const *line, int *err, t_scene *scene)
 {
 	t_light		*res;
 
 	if (*err == ERROR)
 		return ;
-	res = ft_malloc(sizeof(*res));
-	parse_vec(res->pos.e, &line, err, any);
-	printf("light: %f, %f, %f\n", res->pos.e[0], res->pos.e[1], res->pos.e[2]);
-	res->ratio = parse_double(&line, err, positive_normalized);
-	parse_color(res->color.e, &line, err);
+	res = ft_malloc(sizeof(*res) * (scene->lightc + 1));
+	parse_vec(res[scene->lightc].pos.e, &line, err, any);
+	res[scene->lightc].ratio = parse_double(&line, err, positive_normalized);
+	parse_color(res[scene->lightc].color.e, &line, err);
 	if (*err == ERROR)
-		ft_free((void **) &res);
-	else
-		scene->lights = (t_light **) append_scene((void **) scene->lights, res, sizeof(*res));
+		return ;
+	memcopy(res, scene->lights, sizeof(*scene->lights) * scene->lightc);
+	free(scene->lights);
+	scene->lights = res;
+	++scene->lightc;
 }
 
 void	parse_sphere(char const *line, int *err, t_scene *scene)
@@ -57,12 +57,12 @@ void	parse_sphere(char const *line, int *err, t_scene *scene)
 
 	if (*err == ERROR)
 		return ;
-	res = ft_malloc(sizeof(*res));
-	parse_vec(res->sphere.pos.e, &line, err, any);
-	res->sphere.rad = parse_double(&line, err, positive) / 2.0;
-	parse_vec(res->sphere.color.e, &line, err, is_uchar);
+	res = ft_malloc(sizeof(*res) * (scene->objc + 1));
+	res[scene->objc].type = e_sphere;
+	parse_vec(res[scene->objc].sphere.pos.e, &line, err, any);
+	res[scene->objc].sphere.rad = parse_double(&line, err, positive) / 2.0;
+	parse_vec(res[scene->objc].sphere.color.e, &line, err, is_uchar);
 	if (*err == ERROR)
-		ft_free((void **) &res);
-	else
-		scene->objs = (t_obj **) append_scene((void **) scene->objs, res, sizeof(*res));
+		return ;
+	append_obj(scene, res);
 }
