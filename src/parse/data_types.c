@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file2.c                                            :+:      :+:    :+:   */
+/*   data_types.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:29:18 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/19 08:32:16 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/19 10:03:02 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ FPR	parse_double(char const **str, int *err, int in_range(FPR))
 	FPR	res;
 
 	skip_spaces(str);
-	if ((**str == '-' && !is_digit((*str)[1]))
+	if ((**str == '-' && !is_digit((*str)[1]) && (*str)[1] != '.')
 		|| (**str != '-' && !is_digit(**str) && **str != '.'))
 		*err = ERROR;
 	if (*err == ERROR)
