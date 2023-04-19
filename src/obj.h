@@ -67,10 +67,10 @@ typedef struct s_plane
 typedef struct s_cylinder
 {
 	t_vec3			pos;
-	t_vec3			axis;
 	FPR				rad;
-	FPR				height;
 	t_vec3			color;
+	t_vec3			axis;
+	FPR				height;
 }	t_cylinder;
 
 typedef enum e_type
