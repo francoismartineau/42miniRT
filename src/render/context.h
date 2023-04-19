@@ -6,14 +6,15 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 07:36:08 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/18 16:12:05 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/19 07:32:56 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONTEXT_H
 # define CONTEXT_H
 
-# include <MLX42/MLX42.h>
+# include "MLX42/MLX42.h"
+# include "obj.h"
 
 typedef struct s_context
 {
