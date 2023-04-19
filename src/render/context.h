@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   context.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 07:36:08 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/18 15:11:13 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/18 16:12:05 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_context
 	t_scene		scene;
 }	t_context;
 
-int		context_new(t_context *ctx, int width, int height, char const *path);
+int		context_new(t_context *ctx, int width, int height);
 void	context_free(t_context *ctx);
 
 #endif
