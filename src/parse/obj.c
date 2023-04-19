@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:57 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/19 09:17:46 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/19 09:25:15 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	parse_sphere(char const *line, int *err, t_scene *scene)
 	res[scene->objc].type = e_sphere;
 	parse_vec(res[scene->objc].sphere.pos.e, &line, err, any);
 	res[scene->objc].sphere.rad = parse_double(&line, err, positive) / 2.0;
-	parse_vec(res[scene->objc].sphere.color.e, &line, err, is_uchar);
+	parse_color(res[scene->objc].sphere.color.e, &line, err);
 	if (*err == ERROR)
 		return ;
 	append_obj(scene, res);
