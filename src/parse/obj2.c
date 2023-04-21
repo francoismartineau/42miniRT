@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:19:25 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/21 11:23:04 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/21 17:15:40 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	parse_cylinder(char const *line, int *err, t_scene *scene)
 void	append_obj(t_scene *scene, t_obj *new_alloc)
 {
 	memcopy(new_alloc, scene->objs, sizeof(*scene->objs) * scene->objc);
-	free(scene->objs);
+	ft_free((void **) &scene->objs);
 	scene->objs = new_alloc;
 	++scene->objc;
 }

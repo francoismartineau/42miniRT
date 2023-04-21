@@ -16,6 +16,7 @@ SRC_FILES	=	exit.c \
 				util/atod.c \
 				util/get_next_line/get_next_line.c \
 				util/get_next_line/get_next_line_utils.c \
+				util/intoa.c \
 				util/mem.c \
 				util/str.c \
 				util/vec3.c

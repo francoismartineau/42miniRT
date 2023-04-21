@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:47 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/19 08:31:52 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:14:28 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,17 @@ static void	parse_line(char *line, int *err, t_scene *scene)
 	get_obj_parser((const char **) &line)(line, err, scene);
 }
 
+t_parsing_data	*get_parsing_data(void)
+{
+	static t_parsing_data	data = {0};
+
+	return (&data);
+}
+
+#include <stdio.h>
 int	parse_file(char const *path, t_scene *scene)
 {
 	const int	fd = open(path, O_RDONLY);
-	char		*line;
 	int			err;
 
 	if (fd == ERROR)
@@ -72,11 +79,12 @@ int	parse_file(char const *path, t_scene *scene)
 	(*scene) = (t_scene) {0};
 	while (err != ERROR)
 	{
-		line = get_next_line(fd);
-		if (!line)
+		get_parsing_data()->line = get_next_line(fd);
+		if (!get_parsing_data()->line)
 			break ;
-		parse_line(line, &err, scene);
-		free(line);
+		get_parsing_data()->line_n += 1;
+		parse_line(get_parsing_data()->line, &err, scene);
+		ft_free((void **) &get_parsing_data()->line);
 		if (err == ERROR)
 		{
 			free_scene(scene);
@@ -84,5 +92,6 @@ int	parse_file(char const *path, t_scene *scene)
 		}
 	}
 	close(fd);
+	get_next_line(fd);
 	return (err);
 }

@@ -28,7 +28,6 @@
 // ratio: 0,1
 typedef struct s_a_light
 {
-	FPR		ratio;
 	t_vec3	color;
 }	t_a_light;
 
@@ -43,7 +42,6 @@ typedef struct s_camera
 typedef struct s_light
 {
 	t_vec3			pos;
-	FPR				ratio;
 	t_vec3			color;
 }	t_light;
 

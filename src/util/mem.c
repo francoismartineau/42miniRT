@@ -3,21 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 11:07:46 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 08:37:00 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/19 14:51:10 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "exit.h"
 
 void	*ft_malloc(size_t size)
 {
-	void	*res;
+	static int	i = 0;
+	void		*res;
 
 	res = malloc(size);
+	fprintf(stderr, "malloc: %02i %p\n", ++i, res);
 	if (!res)
 		exit_error("malloc failure");
 	return (res);
@@ -26,6 +29,7 @@ void	*ft_malloc(size_t size)
 void	*ft_free(void **m)
 {
 	free(*m);
+	fprintf(stderr, "free: %p\n", *m);
 	*m = NULL;
 	return (*m);
 }
