@@ -6,13 +6,17 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:56:57 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/19 09:19:35 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/21 08:24:10 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 
+#include <stdio.h>
+
+#include "math/vecmath.h"
 #include "raycast.h"
+#include "shading.h"
 
 typedef struct s_hit
 {
@@ -20,20 +24,20 @@ typedef struct s_hit
 	const t_obj	*obj;
 }	t_hit;
 
-int	gethit(const t_ray ray, const t_scene *scene, t_hit *hit)
+static int	gethit(const t_ray ray, const t_scene *scene, t_hit *hit)
 {
 	unsigned int	i;
 	FPR				t[2];
 
 	i = -1;
-	t[0] = 0;
+	t[0] = 0.0;
 	while (++i < scene->objc)
 	{
-		t[1] = ray_intersect(ray, &scene->objs[i]);
+		t[1] = ray_intersect(ray, scene->objs + i);
 		if (t[1] > 0.0 && (t[0] == 0.0 || t[1] < t[0]))
 		{
 			t[0] = t[1];
-			hit->obj = &scene->objs[i];
+			hit->obj = scene->objs + i;
 		}
 	}
 	if (t[0])
@@ -57,7 +61,7 @@ void	render(t_context *ctx)
 		while (++i[1] < ctx->width)
 		{
 			ray = (t_ray){.pos = ctx->scene.camera.pos,
-				.dir = vec3_normalize((t_vec3){{{(FPR)i[1] / ctx->height - 0.5, (FPR)i[0] / ctx->height - 0.5, -0.6}}})};
+				.dir = vec3_norm((t_vec3){{{(FPR)i[1] / ctx->height - 0.5, (FPR)i[0] / ctx->height - 0.5, -0.6}}})};
 			if (gethit(ray, &ctx->scene, &hit))
 				mlx_put_pixel(ctx->fb, i[1], i[0], shade(hit.obj, hit.pos, ctx));
 			else

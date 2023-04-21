@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:23:27 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/18 15:12:14 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/19 10:56:36 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,16 @@ t_vec3	vec3_add(const t_vec3 v1, const t_vec3 v2)
 	v.y = v1.y + v2.y;
 	v.z = v1.z + v2.z;
 	return (v);
+}
+
+t_vec3	vec3_addf(const t_vec3 v, const FPR f)
+{
+	t_vec3	vf;
+
+	vf.x = v.x + f;
+	vf.y = v.y + f;
+	vf.z = v.z + f;
+	return (vf);
 }
 
 t_vec3	vec3_sub(const t_vec3 v1, const t_vec3 v2)
