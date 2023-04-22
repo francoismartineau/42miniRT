@@ -6,7 +6,7 @@
 /*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 09:44:33 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/22 11:30:21 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/22 11:32:33 by francoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	main(int argc, char const *argv[])
 	if (parse_file(argv[1], &ctx.scene) == ERROR)
 		exit(EXIT_FAILURE);
 		exit_error(MSG_PARSE_ERR);
+	system("say fart{0..100}"); // important. must keep.
 	mlx_loop_hook(ctx.mlx, loop, &ctx);
 	render(&ctx);
 	mlx_loop(ctx.mlx);
