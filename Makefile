@@ -1,5 +1,7 @@
 SRC_FILES	=	exit.c \
 				main.c \
+				math/clamp.c \
+				math/mat3.c \
 				math/vecmath.c \
 				parse/data_types.c \
 				parse/file.c \
@@ -9,6 +11,8 @@ SRC_FILES	=	exit.c \
 				parse/ranges2.c \
 				render/context.c \
 				render/raycast.c \
+				render/shading.c \
+				render/render.c \
 				util/atod.c \
 				util/get_next_line/get_next_line.c \
 				util/get_next_line/get_next_line_utils.c \
@@ -34,7 +38,7 @@ all: mlx $(NAME)
 bonus: all
 
 mlx:
-	$(MAKE) "DEBUG=1" -C mlx
+	@$(MAKE) -C mlx
 
 noerr: CFLAGS:=$(subst -Werror,,$(CFLAGS))
 noerr: all
@@ -50,7 +54,7 @@ rel: CFLAGS+=-O2
 rel: re
 
 clean:
-	@-rm -rf $(OBJ)
+	@-rm -rf $(OBJ_DIR)/*.o $(OBJ_DIR)/*.d
 
 fclean: clean
 	@-rm -f $(NAME)

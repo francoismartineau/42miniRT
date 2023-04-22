@@ -22,7 +22,7 @@
 # define OBJ_QTY 6
 
 # include "def.h"
-
+# include "math/mat3.h"
 # include "util/vec3.h"
 
 // ratio: 0,1
@@ -68,6 +68,8 @@ typedef struct s_cylinder
 	FPR				rad;
 	t_vec3			color;
 	t_vec3			axis;
+	t_mat3			rot;
+	t_mat3			invrot;
 	FPR				height;
 }	t_cylinder;
 

@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   obj2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:19:25 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/19 13:59:06 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/21 17:15:40 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "parse/parse.h"
 #include "util/util.h"
+#include "math/vecmath.h"
 #include "obj.h"
 #include "def.h"
 
@@ -42,8 +43,12 @@ void	parse_cylinder(char const *line, int *err, t_scene *scene)
 	res[scene->objc].type = e_cylinder;
 	parse_vec(res[scene->objc].cylinder.pos.e, &line, err, any);
 	parse_vec(res[scene->objc].cylinder.axis.e, &line, err, signed_normalized);
+	res[scene->objc].cylinder.axis = vec3_norm(res[scene->objc].cylinder.axis);
 	res[scene->objc].cylinder.rad = parse_double(&line, err, positive) / 2;
 	res[scene->objc].cylinder.height = parse_double(&line, err, positive);
+	res[scene->objc].cylinder.rot = mat3_rotvec(res[scene->objc].cylinder.axis);
+	res[scene->objc].cylinder.invrot = mat3_inv(
+			res[scene->objc].cylinder.rot);
 	parse_color(res[scene->objc].cylinder.color.e, &line, err);
 	if (*err == ERROR)
 		return ;
