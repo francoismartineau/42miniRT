@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:19:25 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/21 17:15:40 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/29 15:32:58 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ void	parse_plane(char const *line, int *err, t_scene *scene)
 	res[scene->objc].type = e_plane;
 	parse_vec(res[scene->objc].plane.pos.e, &line, err, any);
 	parse_vec(res[scene->objc].plane.ori.e, &line, err, signed_normalized);
+	res[scene->objc].plane.ori = vec3_norm(res[scene->objc].plane.ori);
+	res[scene->objc].plane.ori.x *= -1.0f;
+	res[scene->objc].plane.ori.z *= -1.0f;
 	parse_color(res[scene->objc].plane.color.e, &line, err);
 	if (*err == ERROR)
 		return ;
@@ -46,9 +49,6 @@ void	parse_cylinder(char const *line, int *err, t_scene *scene)
 	res[scene->objc].cylinder.axis = vec3_norm(res[scene->objc].cylinder.axis);
 	res[scene->objc].cylinder.rad = parse_double(&line, err, positive) / 2;
 	res[scene->objc].cylinder.height = parse_double(&line, err, positive);
-	res[scene->objc].cylinder.rot = mat3_rotvec(res[scene->objc].cylinder.axis);
-	res[scene->objc].cylinder.invrot = mat3_inv(
-			res[scene->objc].cylinder.rot);
 	parse_color(res[scene->objc].cylinder.color.e, &line, err);
 	if (*err == ERROR)
 		return ;

@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   obj.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:57 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/19 14:54:29 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/27 14:40:07 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <math.h>
 #include "parse/parse.h"
 #include "util/util.h"
+#include "math/mat3.h"
+#include "math/vecmath.h"
 #include "obj.h"
 #include "def.h"
 
@@ -35,7 +38,10 @@ void	parse_camera(char const *line, int *err, t_scene *scene)
 		return ;
 	parse_vec(scene->camera.pos.e, &line, err, any);
 	parse_vec(scene->camera.ori.e, &line, err, signed_normalized);
-	scene->camera.fov = parse_uint(&line, err, in_fov_range);
+	scene->camera.fov = (FPR)parse_uint(&line, err, in_fov_range);
+	scene->camera.ori = vec3_norm(scene->camera.ori);
+	scene->camera.rot = lookvector(scene->camera.ori);
+	scene->camera.fov *= M_PI / 180.0f;
 }
 
 void	parse_light(char const *line, int *err, t_scene *scene)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:47 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/19 15:14:28 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/29 20:25:15 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ t_parsing_data	*get_parsing_data(void)
 	return (&data);
 }
 
-#include <stdio.h>
 int	parse_file(char const *path, t_scene *scene)
 {
 	const int	fd = open(path, O_RDONLY);
@@ -76,7 +75,7 @@ int	parse_file(char const *path, t_scene *scene)
 	if (fd == ERROR)
 		return (ERROR);
 	err = SUCCESS;
-	(*scene) = (t_scene) {0};
+	(*scene) = (t_scene){0};
 	while (err != ERROR)
 	{
 		get_parsing_data()->line = get_next_line(fd);

@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 08:30:10 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 08:09:09 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/26 10:27:43 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,23 @@ void	assert(char const *str, int res)
 	}
 }
 
-static int	eq_double(FPR a, FPR b)
-{
-	return (a >= b - .1 && a <= b + .1);
-}
+// static int	eq_double(FPR a, FPR b)
+// {
+// 	return (a >= b - .1 && a <= b + .1);
+// }
 
-void	debug(void)
-{
-	int		fd;
-	t_obj	**objs;
+// void	debug(void)
+// {
+// 	int		fd;
+// 	t_obj	**objs;
 
-	fd = open(FILE1, O_WRONLY | O_TRUNC | O_CREAT, 0666);
-	if (fd == ERROR)
-		return ;
-	write(fd, STR1, strln(STR1));
-	close(fd);
-	objs = parse_file(FILE1);
-	assert("A", objs[0]->type == e_a_light);
-	assert("0.2", eq_double(objs[0]->ratio, 0.2));
-	assert("255,255,255", objs[0]->color == -1);
-}
+// 	fd = open(FILE1, O_WRONLY | O_TRUNC | O_CREAT, 0666);
+// 	if (fd == ERROR)
+// 		return ;
+// 	write(fd, STR1, strln(STR1));
+// 	close(fd);
+// 	objs = parse_file(FILE1);
+// 	assert("A", objs[0]->type == e_a_light);
+// 	assert("0.2", eq_double(objs[0]->ratio, 0.2));
+// 	assert("255,255,255", objs[0]->color == -1);
+// }

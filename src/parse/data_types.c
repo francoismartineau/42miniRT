@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_types.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:29:18 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/19 14:30:01 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/29 20:30:04 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	parsing_error(char const *str, int *err)
 	char	*line_n;
 	size_t	char_n;
 	size_t	i;
-	
+
 	*err = ERROR;
 	write(STDERR_FILENO, NAME, strln(NAME));
 	write(STDERR_FILENO, ": parsing error: at line ", 25);
@@ -36,8 +36,8 @@ static void	parsing_error(char const *str, int *err)
 	while (++i < char_n)
 		if (get_parsing_data()->line[i] == '\t')
 			write(STDERR_FILENO, "\t", 1);
-		else
-			write(STDERR_FILENO, " ", 1);
+	else
+		write(STDERR_FILENO, " ", 1);
 	write(STDERR_FILENO, "^\n", 2);
 }
 
@@ -46,9 +46,9 @@ void	parse_color(FPR dst[3], char const **str, int *err)
 	if (*err == ERROR)
 		return ;
 	parse_vec(dst, str, err, is_uchar);
-	dst[0] /=255;
-	dst[1] /=255;
-	dst[2] /=255;
+	dst[0] /= 255;
+	dst[1] /= 255;
+	dst[2] /= 255;
 }
 
 FPR	parse_double(char const **str, int *err, int in_range(FPR))

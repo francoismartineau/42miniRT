@@ -19,7 +19,9 @@ SRC_FILES	=	exit.c \
 				util/intoa.c \
 				util/mem.c \
 				util/str.c \
-				util/vec3.c
+				util/vec3.c \
+				debug/debug.c \
+				debug/alloc.c \
 
 SRC_DIR		=	src
 
@@ -29,7 +31,7 @@ OBJ:=$(addprefix $(OBJ_DIR)/,$(SRC_FILES:.c=.o))
 NAME=miniRT
 
 CC=gcc
-CFLAGS=-Wall -Wextra -Wpedantic -Werror -Isrc -Imlx/include
+CFLAGS=-Wall -Wextra -Wpedantic -Werror -Isrc -Imlx/include -Ofast
 LDFLAGS=-Lmlx
 LDLIBS=-lmlx42 -framework OpenGL -framework AppKit -framework IOKit -lglfw3
 
@@ -47,7 +49,7 @@ sanit: CFLAGS+=-g -O0 -fsanitize=address
 sanit: LDFLAGS+=-fsanitize=address
 sanit: re
 
-debug: CFLAGS+=-g -O0
+debug: CFLAGS+=-g -O0 -DDEBUG
 debug: re
 
 rel: CFLAGS+=-O2

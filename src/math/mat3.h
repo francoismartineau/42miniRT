@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 13:44:39 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/21 11:23:02 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/27 09:43:55 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ typedef struct s_mat3
 t_mat3	mat3_rotvec(const t_vec3 v1);
 t_vec3	mat3_mul_vec3(const t_mat3 m, const t_vec3 v);
 t_mat3	mat3_inv(const t_mat3 m);
+t_mat3	lookvector(const t_vec3 axis);
 
 #endif

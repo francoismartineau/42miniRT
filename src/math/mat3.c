@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 13:55:09 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/21 16:28:55 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/29 15:38:14 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,34 @@
 #include "vecmath.h"
 #include "mat3.h"
 
-t_mat3	mat3_new(const FPR f)
+static t_mat3	rotation(const t_vec3 axis, const FPR angle)
 {
+	const t_vec3	axisn = vec3_norm(axis);
+	const FPR		f[6] = {
+		cosf(angle),
+		sinf(angle),
+		1.0f - f[0],
+		axisn.x,
+		axisn.y,
+		axisn.z
+	};
 	const t_mat3	mat = {
-		.x = {{{f, f, f}}},
-		.y = {{{f, f, f}}},
-		.z = {{{f, f, f}}}
+		.x = {{{f[2] * f[3] * f[3] + f[0], f[2] * f[3] * f[4] - f[5] * f[1],
+		f[2] * f[3] * f[5] + f[4] * f[1]}}},
+		.y = {{{f[2] * f[4] * f[3] + f[5] * f[1], f[2] * f[4] * f[4] + f[0],
+		f[2] * f[4] * f[5] - f[3] * f[1]}}},
+		.z = {{{f[2] * f[5] * f[3] - f[4] * f[1], f[2] * f[5] * f[4] + f[3]
+		* f[1], f[2] * f[5] * f[5] + f[0]}}}
 	};
 
 	return (mat);
 }
 
-static t_mat3	rotation(const t_vec3 axis, const FPR angle)
-{
-	const float		a = angle;
-	const float		c = cos(a);
-	const float		s = sin(a);
-	const t_vec3	temp = vec3_scale(axis, 1.0f - c);
-	t_mat3			mat;
-
-	mat.m00 = c + temp.e[0] * axis.e[0];
-	mat.m01 = temp.e[0] * axis.e[1] + s * axis.e[2];
-	mat.m02 = temp.e[0] * axis.e[2] - s * axis.e[1];
-	mat.m10 = temp.e[1] * axis.e[0] - s * axis.e[2];
-	mat.m11 = c + temp.e[1] * axis.e[1];
-	mat.m12 = temp.e[1] * axis.e[2] + s * axis.e[0];
-	mat.m20 = temp.e[2] * axis.e[0] + s * axis.e[1];
-	mat.m21 = temp.e[2] * axis.e[1] - s * axis.e[0];
-	mat.m22 = c + temp.e[2] * axis.e[2];
-	return (mat);
-}
-
 t_mat3	mat3_rotvec(const t_vec3 v1)
 {
-	const t_vec3	up = {{{0, -1, 0}}};
+	const t_vec3	up = {{{0.0f, -1.0f, 0.0f}}};
 	const t_vec3	axis = vec3_cross(v1, up);
-	const FPR		angle = acos(vec3_dot(v1, up) / (vec3_length(v1)));
+	const FPR		angle = acosf(vec3_dot(v1, up) / (vec3_length(v1)));
 
 	return (rotation(axis, angle));
 }
@@ -79,4 +71,17 @@ t_mat3	mat3_inv(const t_mat3 m)
 	m2.m21 = m.m01 * m.m20 - m.m00 * m.m21;
 	m2.m22 = m.m00 * m.m11 - m.m01 * m.m10;
 	return (m2);
+}
+
+t_mat3	lookvector(const t_vec3 axis)
+{
+	const t_vec3	up = {{{0.0f, -1.0f, 0.0f}}};
+	const t_vec3	right = vec3_norm(vec3_cross(up, axis));
+	const t_vec3	newup = vec3_norm(vec3_cross(axis, right));
+
+	return ((t_mat3){{{
+				{{{right.x, newup.x, axis.x}}},
+				{{{right.y, newup.y, axis.y}}},
+				{{{right.z, newup.z, axis.z}}}
+			}}});
 }

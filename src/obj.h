@@ -35,7 +35,8 @@ typedef struct s_camera
 {
 	t_vec3			pos;
 	t_vec3			ori;
-	unsigned int	fov;
+	t_mat3			rot;
+	FPR				fov;
 }	t_camera;
 
 // ratio: 0,1
@@ -48,16 +49,16 @@ typedef struct s_light
 typedef struct s_sphere
 {
 	t_vec3			pos;
-	FPR				rad;
 	t_vec3			color;
+	FPR				rad;
 }	t_sphere;
 
 // ori: -1,1
 typedef struct s_plane
 {
 	t_vec3			pos;
-	t_vec3			ori;
 	t_vec3			color;
+	t_vec3			ori;
 }	t_plane;
 
 // coord: cylinder's center
@@ -65,11 +66,9 @@ typedef struct s_plane
 typedef struct s_cylinder
 {
 	t_vec3			pos;
-	FPR				rad;
 	t_vec3			color;
 	t_vec3			axis;
-	t_mat3			rot;
-	t_mat3			invrot;
+	FPR				rad;
 	FPR				height;
 }	t_cylinder;
 
@@ -91,6 +90,11 @@ typedef struct s_obj
 		t_cylinder	cylinder;
 		t_plane		plane;
 		t_sphere	sphere;
+		struct
+		{
+			t_vec3	pos;
+			t_vec3	color;
+		};
 	};
 }	t_obj;
 

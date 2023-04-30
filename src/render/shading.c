@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:04:34 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/21 17:13:51 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/29 20:32:05 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,101 +30,86 @@ typedef struct s_data
 	FPR		spec;
 }	t_data;
 
-static void	desaturate(int color[3], FPR total)
+static t_vec3	getnormal(const t_obj *obj, const t_vec3 hit)
 {
-	FPR	desat;
-
-	desat = powf(total, 5);
-	color[0] += (255 - color[0]) * desat;
-	color[1] += (255 - color[1]) * desat;
-	color[2] += (255 - color[2]) * desat;
-}
-
-static int	shade_sphere(const t_sphere *sphere, const t_vec3 hit,
-	const t_context *ctx)
-{
-	const t_data	data = {
-		.dist = fmaxf(powf(vec3_length(vec3_sub(hit, ctx->scene.lights[0].pos))
-				+ 1.0f, 2.0f) - 1.0f, 2.0f),
-		.normal = vec3_norm(vec3_sub(hit, sphere->pos)),
-		.light = vec3_norm(vec3_sub(ctx->scene.lights[0].pos, hit)),
-		.diffuse = clamp(vec3_dot(data.normal, data.light)
-			/ data.dist, 0.0f, 1.0f),
-		.view = vec3_norm(vec3_sub(ctx->scene.camera.pos, hit)),
-		.reflected = vec3_reflect(vec3_scale(data.light, -1.0f), data.normal),
-		.spec = powf(clamp(vec3_dot(data.view, data.reflected), 0.0f, 1.0f), 32.0f)
-		/ data.dist
-	};
-	FPR				total;
-	int				color[3];
-
-	total = fminf(ctx->scene.a_light.ratio + data.diffuse + data.spec, 1.0f);
-	color[0] = sphere->color.x * total * 0xff;
-	color[1] = sphere->color.y * total * 0xff;
-	color[2] = sphere->color.z * total * 0xff;
-	desaturate(color, total);
-	return (color[0] << 24 | color[1] << 16 | color[2] << 8 | 0xff);
-}
-
-static t_vec3	cyl_normal(const t_cylinder *cy, const t_vec3 hit)
-{
-	t_vec3	normal;
 	t_vec3	proj;
-	t_vec3	proj2;
-	const t_vec3	oc = vec3_scale(cy->axis, cy->height / 2.0f);
 
-	proj = vec3_scale(cy->axis, vec3_dot(cy->axis, vec3_sub(hit, oc)));
-	proj2 = vec3_sub(hit, vec3_add(oc, proj));
-	normal = vec3_norm(vec3_sub(hit, vec3_add(oc, proj)));
-	return (normal);
-}
-
-static int	shade_cylinder(const t_cylinder *cy,
-	const t_vec3 hit, const t_context *ctx)
-{
-	
-	const t_data	data = {
-		.dist = fmaxf(powf(vec3_length(vec3_sub(hit, ctx->scene.lights[0].pos))
-				+ 1.0f, 2.0f) - 1.0f, 2.0f),
-		.normal = cyl_normal(cy, hit),
-		.light = vec3_norm(vec3_sub(ctx->scene.lights[0].pos, hit)),
-		.diffuse = clamp(vec3_dot(data.normal, data.light)
-			/ data.dist, 0.0f, 1.0f),
-		.view = vec3_norm(vec3_sub(ctx->scene.camera.pos, hit)),
-		.reflected = vec3_reflect(vec3_scale(data.light, -1.0f), data.normal),
-		.spec = powf(clamp(vec3_dot(data.view, data.reflected), 0.0f, 1.0f), 32.0)
-		/ data.dist
-	};
-	// const t_data	data = {
-	// 	.dist = fmax(vec3_length(vec3_sub(rothit, ctx->scene.lights[0].pos))
-	// 		* 2.0, 1.0),
-	// 	.normal = cyl_normal(cy, rothit),
-	// 	.light = vec3_norm(vec3_sub(ctx->scene.lights[0].pos, rothit)),
-	// 	.diffuse = clamp(vec3_dot(data.normal, data.light) / data.dist,
-	// 		0.0, 2.0),
-	// 	.view = vec3_norm(vec3_sub(ctx->scene.camera.pos, rothit)),
-	// 	.reflected = vec3_reflect(vec3_scale(data.light, -1.0), data.normal),
-	// 	.spec = pow(clamp(vec3_dot(data.view, data.reflected), 0.0, 1.0), 32.0)
-	// 	/ data.dist
-	// };
-	FPR				total;
-	int				color[3];
-
-	total = fminf(ctx->scene.a_light.ratio + data.diffuse + data.spec, 1.0f);
-	color[0] = cy->color.x * total * 0xff;
-	color[1] = cy->color.y * total * 0xff;
-	color[2] = cy->color.z * total * 0xff;
-	desaturate(color, total);
-	return (color[0] << 24 | color[1] << 16 | color[2] << 8 | 0xff);
-}
-
-int	shade(const t_obj *obj, t_vec3 hit, const t_context *ctx)
-{
 	if (obj->type == e_sphere)
-		return (shade_sphere(&obj->sphere, hit, ctx));
-	else if (obj->type == e_cylinder)
+		return (vec3_norm(vec3_sub(hit, obj->sphere.pos)));
+	else if (obj->type == e_plane)
+		return (vec3_scale(obj->plane.ori, -1.0f));
+	else
 	{
-		return (shade_cylinder(&obj->cylinder, hit, ctx));
+		proj = vec3_sub(hit, obj->cylinder.pos);
+		return (vec3_norm(vec3_sub(proj, vec3_scale(obj->cylinder.axis,
+						vec3_dot(proj, obj->cylinder.axis)))));
 	}
-	return (0xff);
+}
+
+static void	desaturate(t_vec3 *color, FPR total)
+{
+	const FPR	desat = powf(total, 5);
+
+	color->x += (1.0f - color->x) * desat;
+	color->y += (1.0f - color->y) * desat;
+	color->z += (1.0f - color->z) * desat;
+}
+
+static int	isobscured(const t_vec3 hit, const t_scene *s,
+	const t_obj *obj, const t_light *l)
+{
+	const t_ray		ray = (t_ray){hit, vec3_sub(l->pos, hit)};
+	FPR				t;
+	size_t			i;
+
+	i = -1;
+	while (++i < s->objc)
+	{
+		if (s->objs + i == obj)
+			continue ;
+		t = ray_intersect(ray, s->objs + i);
+		if (t > 0.0f && t < 0.999f)
+			return (1);
+	}
+	return (0);
+}
+
+static t_vec3	shadelight(const t_obj *obj, const t_vec3 hit,
+	const t_scene *s, const t_light *l)
+{
+	t_data		data;
+	t_vec3		color;
+
+	if (isobscured(hit, s, obj, l))
+		return ((t_vec3){{{0.0f, 0.0f, 0.0f}}});
+	data.dist = fmaxf(powf(vec3_length(vec3_sub(hit, l->pos)) + 1.0f, 2.0f)
+			- 1.0f, 2.0f);
+	data.normal = getnormal(obj, hit);
+	data.light = vec3_norm(vec3_sub(l->pos, hit));
+	data.diffuse = clamp(vec3_dot(data.normal, data.light)
+			/ data.dist, 0.0f, 1.0f);
+	data.view = vec3_norm(vec3_sub(s->camera.pos, hit));
+	data.reflected = vec3_reflect(vec3_scale(data.light, -1.0f), data.normal);
+	data.spec = powf(clamp(vec3_dot(data.view, data.reflected), 0.0f, 1.0f),
+			32.0f) / data.dist;
+	color = vec3_scale(obj->color, fminf(data.diffuse + data.spec, 1.0f));
+	desaturate(&color, data.diffuse + data.spec);
+	return (color);
+}
+
+int	shade(const t_obj *obj, const t_vec3 hit, const t_scene *s)
+{
+	t_vec3	color;
+	size_t	i;
+
+	color = s->a_light.color;
+	i = -1;
+	while (++i < s->lightc)
+		color = vec3_add(color, shadelight(obj, hit, s, s->lights + i));
+	color.x = fminf(color.x, 1.0f);
+	color.y = fminf(color.y, 1.0f);
+	color.z = fminf(color.z, 1.0f);
+	return ((int)(color.x * 255.0f) << 24
+		| (int)(color.y * 255.0f) << 16
+		| (int)(color.z * 255.0f) << 8 | 0xff);
 }
