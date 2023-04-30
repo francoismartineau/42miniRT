@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:27:11 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/19 10:55:51 by francoma         ###   ########.fr       */
+/*   Updated: 2023/04/29 20:49:58 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stddef.h>
 
-#include "def.h"
+# include "def.h"
 
 size_t	strln(char const *str);
 char	*strchar(const char *s, int c);

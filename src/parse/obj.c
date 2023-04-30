@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:57 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/27 14:40:07 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/04/29 20:50:09 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 void	parse_a_light(char const *line, int *err, t_scene *scene)
 {
 	FPR	ratio;
-	
+
 	if (*err == ERROR)
 		return ;
 	ratio = parse_double(&line, err, positive_normalized);
