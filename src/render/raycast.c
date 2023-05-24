@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:09:35 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/29 17:27:42 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/05/06 18:23:51 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ static FPR	ray_intersect_sphere(const t_ray ray, const t_sphere *obj)
 		ray.pos.y - obj->pos.y, ray.pos.z - obj->pos.z}}};
 	const FPR		abc[3] = {
 		vec3_dot(ray.dir, ray.dir),
-		2 * vec3_dot(oc, ray.dir),
+		vec3_dot(oc, ray.dir),
 		vec3_dot(oc, oc) - obj->rad * obj->rad
 	};
-	const FPR		discriminant = abc[1] * abc[1] - 4 * abc[0] * abc[2];
+	const FPR		discriminant = abc[1] * abc[1] - abc[0] * abc[2];
 	FPR				t[2];
 
 	if (discriminant < 0.0001f)
 		return (0.0f);
-	t[0] = (-abc[1] - sqrt(discriminant)) / (2 * abc[0]);
-	t[1] = (-abc[1] + sqrt(discriminant)) / (2 * abc[0]);
+	t[0] = (-abc[1] - sqrt(discriminant)) / abc[0];
+	t[1] = (-abc[1] + sqrt(discriminant)) / abc[0];
 	if (t[0] > t[1])
 		return (t[1]);
 	return (t[0]);
@@ -71,8 +71,11 @@ FPR	ray_intersect_plane(const t_ray ray, const t_plane *obj)
 {
 	const FPR		denom = vec3_dot(obj->ori, ray.dir);
 	const FPR		t = vec3_dot(vec3_sub(obj->pos, ray.pos), obj->ori) / denom;
-
-	if (denom < 0.0001f)
+	
+	// check bounds of plane
+	if(vec3_length(vec3_sub(vec3_add(ray.pos, vec3_scale(ray.dir, t)), obj->pos)) > 1.0f)
+		return (0.0f);
+	if (denom > 0.0001f)
 		return (0.0f);
 	return (t);
 }
@@ -100,7 +103,7 @@ t_hit	raycast(const t_ray ray, const t_scene *s)
 	while (++i < s->objc)
 	{
 		t[1] = ray_intersect(ray, s->objs + i);
-		if (t[1] > 0.0001f && t[1] < t[0])
+		if (t[1] > 0.0f && t[1] < t[0])
 		{
 			t[0] = t[1];
 			hit.obj = s->objs + i;

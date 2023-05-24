@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 09:44:33 by francoma          #+#    #+#             */
-/*   Updated: 2023/05/05 23:13:56 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/05/05 23:20:57 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	rtkey(mlx_key_data_t keydata, void *param)
 	{
 		if (keydata.key == MLX_KEY_ESCAPE)
 		{
+			ctx->exit = 1;
 			mlx_close_window(ctx->mlx);
 		}
 	}
@@ -55,6 +56,7 @@ void	loop(void *param)
 int	main(int argc, char const *argv[])
 {
 	t_context	ctx;
+	size_t		i;
 
 	(void) argc;
 	(void) argv;
@@ -71,6 +73,9 @@ int	main(int argc, char const *argv[])
 	mlx_loop_hook(ctx.mlx, loop, &ctx);
 	mlx_key_hook(ctx.mlx, rtkey, &ctx);
 	mlx_loop(ctx.mlx);
+	i = -1;
+	while (++i < 6)
+		pthread_join(ctx.threads[i], NULL);
 	context_free(&ctx);
 	return (0);
 }

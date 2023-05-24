@@ -1,22 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shading.h                                          :+:      :+:    :+:   */
+/*   bounce.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 07:54:54 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/05/03 16:46:14 by eboyce-n         ###   ########.fr       */
+/*   Created: 2023/04/30 17:20:08 by eboyce-n          #+#    #+#             */
+/*   Updated: 2023/05/04 15:53:43 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHADING_H
-# define SHADING_H
+#include "render/raycast.h"
+#include "render/shading.h"
+#include "math/vecmath.h"
 
-# include "obj.h"
-# include "context.h"
-# include "raycast.h"
+#include <stdlib.h>
 
-t_vec3	shade(const t_obj *obj, const t_vec3 hit, const t_scene *s);
+#define SAMPLES 8
 
-#endif
+t_vec3	avg_color(const t_vec3 *colors, size_t count)
+{
+	t_vec3	sum;
+	size_t	i;
+
+	sum = (t_vec3){{{0.0f, 0.0f, 0.0f}}};
+	i = -1;
+	while (++i < count)
+		sum = vec3_add(sum, colors[i]);
+	return (vec3_scale(sum, 1.0f / (FPR)count));
+}

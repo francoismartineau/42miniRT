@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:23:27 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/19 10:56:36 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:09:05 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,11 @@ t_vec3	vec3_add(const t_vec3 v1, const t_vec3 v2)
 	return (v);
 }
 
-t_vec3	vec3_addf(const t_vec3 v, const FPR f)
+int	vec3_color(const t_vec3 v)
 {
-	t_vec3	vf;
-
-	vf.x = v.x + f;
-	vf.y = v.y + f;
-	vf.z = v.z + f;
-	return (vf);
+	return ((int)(fmaxf(fminf(v.x, 1.0f), 0.0f) * 255.0f) << 24
+		| (int)(fmaxf(fminf(v.y, 1.0f), 0.0f) * 255.0f) << 16
+		| (int)(fmaxf(fminf(v.z, 1.0f), 0.0f) * 255.0f) << 8 | 0xff);
 }
 
 t_vec3	vec3_sub(const t_vec3 v1, const t_vec3 v2)

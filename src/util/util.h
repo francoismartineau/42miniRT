@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:27:11 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/29 20:49:58 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/05/05 22:56:00 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ void	*ft_malloc(size_t size);
 void	*ft_free(void **m);
 void	*memcopy(void *dst, const void *src, size_t n);
 void	ft_memset(void *b, int c, size_t len);
+void	ft_intset(int *b, int c, size_t len);
 
 #endif

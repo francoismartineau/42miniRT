@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shading.h                                          :+:      :+:    :+:   */
+/*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 07:54:54 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/05/03 16:46:14 by eboyce-n         ###   ########.fr       */
+/*   Created: 2023/04/19 08:56:24 by eboyce-n          #+#    #+#             */
+/*   Updated: 2023/05/07 00:34:31 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHADING_H
-# define SHADING_H
+#ifndef RENDER_H
+# define RENDER_H
 
-# include "obj.h"
-# include "context.h"
-# include "raycast.h"
+# include "render/context.h"
 
-t_vec3	shade(const t_obj *obj, const t_vec3 hit, const t_scene *s);
+typedef struct s_region
+{
+	unsigned int	x;
+	unsigned int	y;
+	unsigned int	width;
+	unsigned int	height;
+	unsigned int	imgid;
+}	t_region;
+
+void	renderregion(t_context *context, const t_region region);
+void	render(t_context *context);
 
 #endif

@@ -1,5 +1,5 @@
 SRC_FILES	=	exit.c \
-				main.c \
+				bonus/main.c \
 				math/clamp.c \
 				math/mat3.c \
 				math/vecmath.c \
@@ -9,10 +9,12 @@ SRC_FILES	=	exit.c \
 				parse/obj2.c \
 				parse/ranges.c \
 				parse/ranges2.c \
-				render/context.c \
+				bonus/render/context.c \
 				render/raycast.c \
-				render/shading.c \
-				render/render.c \
+				bonus/render/shading.c \
+				bonus/render/render.c \
+				bonus/render/bounce.c \
+				bonus/render/thread.c \
 				util/atod.c \
 				util/get_next_line/get_next_line.c \
 				util/get_next_line/get_next_line_utils.c \
@@ -25,40 +27,20 @@ SRC_FILES	=	exit.c \
 
 SRC_DIR		=	src
 
-OBJ_DIR=obj
+OBJ_DIR=dobj
 OBJ:=$(addprefix $(OBJ_DIR)/,$(SRC_FILES:.c=.o))
 
 NAME=miniRT
 
 CC=gcc
-CFLAGS=-Wall -Wextra -Wpedantic -Werror -Isrc -Imlx/include -Ofast
-LDFLAGS=-Lmlx
+CFLAGS=-Wall -Wpedantic -Werror -Isrc/bonus -Isrc -Imlx/include -Ofast
+LDFLAGS=-Lmlx -Ofast
 LDLIBS=-lmlx42 -framework OpenGL -framework AppKit -framework IOKit -lglfw3
 
 all: mlx $(NAME)
 
-bonus:
-	$(MAKE) -f bonus.mk
-
 mlx:
 	@$(MAKE) -sC mlx
-
-noerr: CFLAGS:=$(subst -Werror,,$(CFLAGS))
-noerr: all
-
-sanit: CFLAGS+=-g -Og -fsanitize=address
-sanit: LDFLAGS+=-fsanitize=address
-sanit: re
-
-debug: CFLAGS+=-g -Og -DDEBUG
-debug: re
-
-rel: CFLAGS+=-O2
-rel: re
-
-clean:
-	@-find $(OBJ_DIR) -type f -name '*.o' -delete
-	@-find $(OBJ_DIR) -type f -name '*.d' -delete
 
 fclean: clean
 	@-rm -f $(NAME)
@@ -72,6 +54,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 $(NAME): $(OBJ)
 	$(CC) $(LDFLAGS) $(LDLIBS) $^ -o $(NAME)
 
-.PHONY: clean fclean re all mlx bonus
+.PHONY: clean fclean re all mlx
 
 -include $(OBJ:.o=.d)

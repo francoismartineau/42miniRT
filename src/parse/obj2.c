@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:19:25 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/29 15:32:58 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/05/06 17:39:35 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	parse_plane(char const *line, int *err, t_scene *scene)
 	parse_vec(res[scene->objc].plane.pos.e, &line, err, any);
 	parse_vec(res[scene->objc].plane.ori.e, &line, err, signed_normalized);
 	res[scene->objc].plane.ori = vec3_norm(res[scene->objc].plane.ori);
-	res[scene->objc].plane.ori.x *= -1.0f;
-	res[scene->objc].plane.ori.z *= -1.0f;
+	// res[scene->objc].plane.ori.y *= -1.0f;
 	parse_color(res[scene->objc].plane.color.e, &line, err);
 	if (*err == ERROR)
 		return ;
