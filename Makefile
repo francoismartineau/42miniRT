@@ -46,6 +46,10 @@ mlx:
 noerr: CFLAGS:=$(subst -Werror,,$(CFLAGS))
 noerr: all
 
+linux: LDLIBS:=-lmlx42 -ldl -lglfw -pthread -lm
+linux: CFLAGS:=-Isrc -Imlx/include -Ofast
+linux: all
+
 sanit: CFLAGS+=-g -Og -fsanitize=address
 sanit: LDFLAGS+=-fsanitize=address
 sanit: re
@@ -70,7 +74,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c -o $@ $< -MMD
 
 $(NAME): $(OBJ)
-	$(CC) $(LDFLAGS) $(LDLIBS) $^ -o $(NAME)
+	$(CC) $(LDFLAGS) $^ -o $(NAME) $(LDLIBS)
 
 .PHONY: clean fclean re all mlx bonus
 
