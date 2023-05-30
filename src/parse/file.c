@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:47 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/29 20:25:15 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:51:22 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,12 @@ static t_obj_parser	get_obj_parser(char const **line)
 
 static void	parse_line(char *line, int *err, t_scene *scene)
 {
+	t_obj_parser	obj_parser;
+	
 	skip_spaces((const char **) &line);
-	get_obj_parser((const char **) &line)(line, err, scene);
+	obj_parser = get_obj_parser((const char **) &line);
+	if (obj_parser)
+		obj_parser(line, err, scene);
 }
 
 t_parsing_data	*get_parsing_data(void)

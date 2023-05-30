@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   atod.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:26:56 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 17:30:32 by francoma         ###   ########.fr       */
+/*   Updated: 2023/05/30 19:05:02 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include "def.h"
 
 int	is_digit(char c)
@@ -45,7 +46,7 @@ static FPR	extract_fractional(char const **str)
 	}
 	if (!fract_len)
 		return (0);
-	return ((FPR)fract / (fract_len * 10));
+	return ((FPR)fract / powf(10, fract_len));
 }
 
 FPR	atod(char const **str)
