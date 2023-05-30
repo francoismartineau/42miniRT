@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:22:56 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/19 15:02:52 by francoma         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:35:09 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,10 @@ static int	buff_rm_line(char **buff, char *line)
 
 char	*get_next_line(int fd)
 {
-	static char	*buff[OPEN_MAX];
+	static char	*buff[FOPEN_MAX];
 	char		*line;
 
-	if (BUFFER_SIZE < 1 || fd >= OPEN_MAX)
+	if (BUFFER_SIZE < 1 || fd >= FOPEN_MAX)
 		return (buff[fd] = NULL);
 	if (read(fd, NULL, 0)
 		||ERROR == buff_get_line(fd, &buff[fd]) || (!buff[fd][0]))
