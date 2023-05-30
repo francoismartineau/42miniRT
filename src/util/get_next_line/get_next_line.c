@@ -6,10 +6,11 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:22:56 by francoma          #+#    #+#             */
-/*   Updated: 2023/05/30 16:35:09 by root             ###   ########.fr       */
+/*   Updated: 2023/05/30 18:43:27 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "get_next_line.h"
 
 #define ERROR -1
@@ -87,13 +88,13 @@ static int	buff_rm_line(char **buff, char *line)
 
 char	*get_next_line(int fd)
 {
-	static char	*buff[FOPEN_MAX];
+	static char	*buff[OPEN_MAX];
 	char		*line;
 
-	if (BUFFER_SIZE < 1 || fd >= FOPEN_MAX)
+	if (BUFFER_SIZE < 1 || fd >= OPEN_MAX)
 		return (buff[fd] = NULL);
 	if (read(fd, NULL, 0)
-		||ERROR == buff_get_line(fd, &buff[fd]) || (!buff[fd][0]))
+		|| ERROR == buff_get_line(fd, &buff[fd]) || (!buff[fd][0]))
 	{
 		ft_free((void **) &buff[fd]);
 		return (buff[fd] = NULL);

@@ -48,6 +48,7 @@ noerr: all
 
 linux: LDLIBS:=-lmlx42 -ldl -lglfw -pthread -lm
 linux: CFLAGS:=-Isrc -Imlx/include -Ofast
+linux: CFLAGS+= -g -Og -DDEBUG
 linux: all
 
 sanit: CFLAGS+=-g -Og -fsanitize=address

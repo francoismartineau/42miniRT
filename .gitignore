@@ -6,4 +6,5 @@ miniRT
 a.out
 *.o
 *.d
+*.a
 *.dSYM
