@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:04:34 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/05/03 16:45:32 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:16:28 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static t_vec3	getnormal(const t_obj *obj, const t_vec3 hit)
 	if (obj->type == e_sphere)
 		return (vec3_norm(vec3_sub(hit, obj->sphere.pos)));
 	else if (obj->type == e_plane)
-		return (vec3_scale(obj->plane.ori, -1.0f));
+		return (obj->plane.ori);
 	else
 	{
 		proj = vec3_sub(hit, obj->cylinder.pos);

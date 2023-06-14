@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 22:26:02 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/05/05 23:20:43 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:22:59 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ void	*renderthread(void *arg)
 			return ((void *)(size_t)pthread_mutex_unlock(&state->indexmutex));
 		region = (t_region){state->index * state->regionsize % ctx->width,
 			state->index * state->regionsize / ctx->width * state->regionsize,
-			state->regionsize,
-			state->regionsize, id};
+			state->regionsize, state->regionsize, id};
 		state->index++;
 		pthread_mutex_unlock(&state->indexmutex);
 		renderregion(ctx, region);

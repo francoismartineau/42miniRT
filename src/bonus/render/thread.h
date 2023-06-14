@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 22:26:17 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/05/05 23:03:00 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:11:11 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include <pthread.h>
 
-typedef pthread_mutex_t	t_mutex;
+typedef struct s_context	t_context;
+typedef struct s_region		t_region;
+typedef pthread_mutex_t		t_mutex;
 
 typedef struct s_rstate
 {
@@ -28,5 +30,6 @@ typedef struct s_rstate
 
 t_rstate	*getstate(void);
 void		*renderthread(void *arg);
+void		transferimg(t_context *ctx, const t_region *region);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:09:35 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/05/06 18:23:51 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:19:10 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,7 @@ FPR	ray_intersect_plane(const t_ray ray, const t_plane *obj)
 {
 	const FPR		denom = vec3_dot(obj->ori, ray.dir);
 	const FPR		t = vec3_dot(vec3_sub(obj->pos, ray.pos), obj->ori) / denom;
-	
-	// check bounds of plane
-	if(vec3_length(vec3_sub(vec3_add(ray.pos, vec3_scale(ray.dir, t)), obj->pos)) > 1.0f)
-		return (0.0f);
+
 	if (denom > 0.0001f)
 		return (0.0f);
 	return (t);
