@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:56:57 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/06/14 14:21:37 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/16 13:35:26 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,23 @@
 #include "render/shading.h"
 #include "thread.h"
 
-#define SAMPLE_COUNT 64
-#define SAMPLE_DEPTH 8
-
-int	pixel_blend(const t_vec3 c1, int c2, size_t i)
+void	blend(t_vec3 *c1, const t_vec3 c2)
 {
-	return (((((int)(c1.x * 255.0f) + (c2 >> 24)) / 2) << 24)
-		| (((((int)(c1.y * 255.0f) + ((c2 >> 16) & 0xff))) / 2) << 16)
-		| (((((int)(c1.z * 255.0f) + ((c2 >> 8) & 0xff))) / 2) << 8) | 0xff);
+	*c1 = vec3_add(*c1, c2);
 }
 
-int	pixel_cast(t_context *ctx, const t_ray ray, const unsigned int x,
+t_vec3	*imgvec(t_context *ctx, const t_region *reg, const unsigned int x,
+		const unsigned int y)
+{
+	return (&(ctx->secimg[reg->imgid][y * reg->width + x]));
+}
+
+t_vec3	pixel_cast(t_context *ctx, const t_ray ray, const unsigned int x,
 		const unsigned int y)
 {
 	t_vec3		color;
 	t_hit		hit;
 
-	hit = raycast(ray, &ctx->scene);
 	hit = raycast((t_ray){{{{
 			ray.pos.x + ((rand() / (FPR)(RAND_MAX)) - 0.5f) * 0.0015f,
 			ray.pos.y + ((rand() / (FPR)(RAND_MAX)) - 0.5f) * 0.0015f,
@@ -47,11 +47,11 @@ int	pixel_cast(t_context *ctx, const t_ray ray, const unsigned int x,
 	if (hit.obj)
 		color = shade(hit.obj, hit.pos, &ctx->scene, SAMPLE_DEPTH);
 	else
-		color = (t_vec3){{{0.3f, 0.5f, 0.7f}}};
+		color = (t_vec3){{{0.3f, 0.5f, 0.8f}}};
 	color.x = sqrtf(color.x);
 	color.y = sqrtf(color.y);
 	color.z = sqrtf(color.z);
-	return (pixel_blend(color, ctx->fb->pixels[y * ctx->width + x]));
+	return (color);
 }
 
 void	renderregion(t_context *ctx, const t_region region)
@@ -70,8 +70,8 @@ void	renderregion(t_context *ctx, const t_region region)
 			{
 				if (ctx->exit)
 					return ;
-				mlx_put_pixel(ctx->secimg[region.imgid], i[1] - region.x, i[0]
-					- region.y, pixel_cast(ctx, (t_ray){ctx->scene.camera.pos,
+				blend(imgvec(ctx, &region, i[1] - region.x, i[0] - region.y),
+					pixel_cast(ctx, (t_ray){ctx->scene.camera.pos,
 						mat3_mul_vec3(ctx->scene.camera.rot, (t_vec3){{{
 							(2.0f * ((i[1] + 0.5f) / ctx->width) - 1.0f)
 							* ctx->aspect * fov, -(2.0f * ((i[0] + 0.5f)
@@ -89,8 +89,10 @@ void	render(t_context *ctx)
 
 	i = -1;
 	while (++i < 6)
-	{
+		ctx->secimg[i] = malloc(getstate()->regsize * getstate()->regsize
+				* sizeof(t_vec3));
+	i = -1;
+	while (++i < 6)
 		pthread_create(&ctx->threads[i], NULL, renderthread,
 			(void *)ctx);
-	}
 }

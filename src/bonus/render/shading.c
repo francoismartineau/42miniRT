@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:04:34 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/05/06 18:14:32 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/16 13:21:13 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,9 @@ t_vec3	shade(const t_obj *obj, const t_vec3 hit, const t_scene *s, size_t d)
 	h = raycast((t_ray){hit, randnormal(data.normal)}, s);
 	if (h.obj)
 		color = vec3_mult(vec3_add(color,
-					shade(h.obj, h.pos, s, d - 1)), obj->color);
+					vec3_scale(shade(h.obj, h.pos, s, d - 1), 0.5f)), obj->color);
 	else
-		color = vec3_mult(vec3_add(color, (t_vec3){{{2.0f, 2.0f, 2.0f}}}),
+		color = vec3_mult(vec3_add(color, (t_vec3){{{1.0f, 1.0f, 1.0f}}}),
 				obj->color);
-	return (vec3_scale(color, 0.5f));
+	return (color);
 }

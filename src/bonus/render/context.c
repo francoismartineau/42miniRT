@@ -6,10 +6,11 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 07:36:06 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/05/06 18:07:35 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/16 10:17:26 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "context.h"
 #include "parse/parse.h"
 #include "render/render.h"
@@ -44,12 +45,7 @@ int	context_new(t_context *ctx, int width, int height)
 	ctx->mlx = mlx_init(width, height, "miniRT", 1);
 	ctx->fb = mlx_new_image(ctx->mlx, width, height);
 	i = -1;
-	while (++i < 6)
-		ctx->secimg[i] = mlx_new_image(ctx->mlx, getstate()->regionsize,
-				getstate()->regionsize);
-	if (!ctx->mlx || !ctx->fb || !ctx->secimg[0] || !ctx->secimg[1]
-		|| !ctx->secimg[2] || !ctx->secimg[3] || !ctx->secimg[4]
-		|| !ctx->secimg[5])
+	if (!ctx->mlx || !ctx->fb)
 	{
 		context_free(ctx);
 		return (0);
@@ -69,8 +65,8 @@ void	context_free(t_context *ctx)
 		mlx_delete_image(ctx->mlx, ctx->fb);
 	i = -1;
 	while (++i < 6)
-		if (ctx->secimg[i])
-			mlx_delete_image(ctx->mlx, ctx->secimg[i]);
+		free(ctx->secimg[i]);
+	i = -1;
 	if (ctx->mlx)
 		mlx_terminate(ctx->mlx);
 	ctx->fb = 0;

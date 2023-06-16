@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 22:26:17 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/06/14 14:11:11 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/16 10:05:27 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_rstate
 	size_t	index;
 	size_t	samples;
 	size_t	depth;
-	size_t	regionsize;
+	size_t	regsize;
 	t_mutex	indexmutex;
 }	t_rstate;
 

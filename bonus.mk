@@ -33,8 +33,8 @@ OBJ:=$(addprefix $(OBJ_DIR)/,$(SRC_FILES:.c=.o))
 NAME=miniRT
 
 CC=gcc
-CFLAGS=-Wall -Wpedantic -Werror -Isrc/bonus -Isrc -Imlx/include -Ofast
-LDFLAGS=-Lmlx -Ofast
+CFLAGS=-Wall -Wpedantic -Werror -Isrc/bonus -Isrc -Imlx/include -O2
+LDFLAGS=-Lmlx -O2
 LDLIBS=-lmlx42 -framework OpenGL -framework AppKit -framework IOKit -lglfw3
 
 all: mlx $(NAME)

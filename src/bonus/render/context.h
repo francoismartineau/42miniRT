@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 07:36:08 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/05/05 23:02:26 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/16 09:22:51 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ typedef struct s_context
 	mlx_image_t		*fb;
 	t_scene			scene;
 	pthread_t		threads[6];
-	mlx_image_t		*secimg[6];
+	t_vec3			*secimg[6];
+	int				frameid[6];
 	int				exit;
 }	t_context;
 
