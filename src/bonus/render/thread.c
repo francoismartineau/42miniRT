@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 22:26:02 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/06/19 10:11:21 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:24:08 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "util/util.h"
 #include "math/math.h"
 
+#include <math.h>
 #include <stdio.h>
 
 t_rstate	*getstate(void)
@@ -102,9 +103,9 @@ void	transferimg(t_context *ctx, const t_region *reg)
 			vec = img + i * reg->width + j;
 			id = (float)ctx->frameid[reg->imgid];
 			((int *)ctx->fb->pixels)[(reg->y + i) * ctx->width + reg->x + j]
-				= (imin((int)(vec->x / id * 255.0f), 255)
-					| (imin((int)(vec->y / id * 255.0f), 255) << 8)
-					| (imin((int)(vec->z / id * 255.0f), 255) << 16)
+				= (imin((int)(sqrtf(vec->x / id) * 255.0f), 255)
+					| (imin((int)(sqrtf(vec->y / id) * 255.0f), 255) << 8)
+					| (imin((int)(sqrtf(vec->z / id) * 255.0f), 255) << 16)
 					| 0xFF000000);
 			j++;
 		}

@@ -51,6 +51,7 @@ typedef struct s_sphere
 	t_vec3			pos;
 	t_vec3			color;
 	t_vec3			emit;
+	FPR				r;
 	FPR				rad;
 }	t_sphere;
 
@@ -60,6 +61,7 @@ typedef struct s_plane
 	t_vec3			pos;
 	t_vec3			color;
 	t_vec3			emit;
+	FPR				r;
 	t_vec3			ori;
 }	t_plane;
 
@@ -70,6 +72,7 @@ typedef struct s_cylinder
 	t_vec3			pos;
 	t_vec3			color;
 	t_vec3			emit;
+	FPR				r;
 	t_vec3			axis;
 	FPR				rad;
 	FPR				height;
@@ -98,6 +101,7 @@ typedef struct s_obj
 			t_vec3	pos;
 			t_vec3	color;
 			t_vec3	emit;
+			FPR		r;
 		};
 	};
 }	t_obj;

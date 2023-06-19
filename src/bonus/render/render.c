@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:56:57 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/06/19 08:10:02 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/19 11:34:41 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
 
 #include "math/vecmath.h"
 #include "math/mat3.h"
 #include "render/raycast.h"
 #include "render/shading.h"
 #include "thread.h"
+
+#include <math.h>
 
 static void	blend(t_vec3 *c1, const t_vec3 c2)
 {
@@ -45,12 +46,9 @@ t_vec3	pixel_cast(t_context *ctx, const t_ray ray,
 			ray.pos.z + ((rand() / (FPR)(RAND_MAX)) - 0.5f) * 0.0015f,
 		}}}, ray.dir}, &ctx->scene);
 	if (hit.obj)
-		color = shade(hit.obj, hit.pos, &ctx->scene);
+		color = shade(hit.obj, hit.pos, &ctx->scene, ray.dir);
 	else
 		color = (t_vec3){{{0.3f, 0.5f, 0.8f}}};
-	color.x = sqrtf(color.x);
-	color.y = sqrtf(color.y);
-	color.z = sqrtf(color.z);
 	return (color);
 }
 

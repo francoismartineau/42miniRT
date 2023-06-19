@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:04:34 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/06/19 09:09:22 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/19 12:22:25 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "math/vecmath.h"
 #include "obj.h"
 
-#define SAMPLE_DEPTH 8
+#define SAMPLE_DEPTH 16
 
 typedef struct s_data
 {
@@ -32,16 +32,20 @@ typedef struct s_data
 	FPR		spec;
 }	t_data;
 
-static t_vec3	randnormal(const t_vec3 normal)
+static t_vec3	randnorm(const t_vec3 n, FPR r)
 {
-	const t_vec3	v = vec3_norm((t_vec3){{{
-			(rand() / (FPR)RAND_MAX - 0.5f),
-			(rand() / (FPR)RAND_MAX - 0.5f),
-			(rand() / (FPR)RAND_MAX - 0.5f),
-		}}});
-
-	if (vec3_dot(v, normal) < 0.0f)
-		return (vec3_scale(v, -1.0f));
+	t_vec3	v = (t_vec3){{{
+			(rand() / (FPR)(RAND_MAX / 2) - 1.0f),
+			(rand() / (FPR)(RAND_MAX / 2) - 1.0f),
+			(rand() / (FPR)(RAND_MAX / 2) - 1.0f),
+		}}};
+	v = vec3_norm(v);
+	if (vec3_dot(v, n) < 0.0f)
+		v = vec3_scale(v, -1.0f);
+	v.x = v.x * r + n.x * (1.0f - r);
+	v.y = v.y * r + n.y * (1.0f - r);
+	v.z = v.z * r + n.z * (1.0f - r);
+	v = vec3_norm(v);
 	return (v);
 }
 
@@ -103,9 +107,9 @@ static t_vec3	getnormal(const t_obj *obj, const t_vec3 hit)
 // 			32.0f) / data->dist;
 // }
 
-t_vec3	shade(const t_obj *obj, t_vec3 hit, const t_scene *s)
+t_vec3	shade(t_obj *obj, t_vec3 hit, const t_scene *s, const t_vec3 ray)
 {
-	t_data	data;
+	t_vec3	norm;
 	t_vec3	light;
 	t_vec3	color;
 	t_hit	h;
@@ -113,18 +117,19 @@ t_vec3	shade(const t_obj *obj, t_vec3 hit, const t_scene *s)
 
 	light = obj->emit;
 	color = obj->color;
-	data.normal = getnormal(obj, hit);
-	data.view = vec3_norm(vec3_sub(s->camera.pos, hit));
+	norm = vec3_reflect(ray, randnorm(getnormal(obj, hit), obj->r));
+	hit = vec3_add(hit, vec3_scale(norm, 0.00005f));
 	i = -1;
 	while (++i < SAMPLE_DEPTH)
 	{
-		h = raycast((t_ray){hit, randnormal(data.normal)}, s);
+		h = raycast((t_ray){hit, norm}, s);
 		if (!h.obj)
 			break ;
 		color = vec3_mult(color, h.obj->color);
-		light = vec3_add(light, vec3_mult(vec3_scale(h.obj->emit, 10.0f), color));
-		hit = h.pos;
-		data.normal = getnormal(h.obj, hit);
+		light = vec3_add(light, vec3_mult(vec3_scale(h.obj->emit, 4.0f),
+					color));
+		norm = vec3_reflect(norm, randnorm(getnormal(h.obj, h.pos), h.obj->r));
+		hit = vec3_add(h.pos, vec3_scale(norm, 0.00005f));
 	}
 	return (light);
 }

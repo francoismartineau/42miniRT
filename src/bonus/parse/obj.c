@@ -6,11 +6,12 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:57 by francoma          #+#    #+#             */
-/*   Updated: 2023/06/19 08:29:32 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/19 12:18:22 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 #include "parse/parse.h"
 #include "util/util.h"
@@ -85,6 +86,9 @@ void	parse_sphere(char const *line, int *err, t_scene *scene)
 	parse_color(res[scene->objc].emit.e, &line, err);
 	if (*err == ERROR)
 		res[scene->objc].emit = (t_vec3){{{0.0f, 0.0f, 0.0f}}};
+	res[scene->objc].r = parse_double(&line, err, positive_normalized);
+	if (*err == ERROR)
+		res[scene->objc].r = 1.0f;
 	*err = 0;
 	append_obj(scene, res);
 }

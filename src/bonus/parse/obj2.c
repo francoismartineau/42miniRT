@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:19:25 by francoma          #+#    #+#             */
-/*   Updated: 2023/06/19 08:30:05 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/19 11:14:09 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ void	parse_plane(char const *line, int *err, t_scene *scene)
 	parse_color(res[scene->objc].emit.e, &line, err);
 	if (*err == ERROR)
 		res[scene->objc].emit = (t_vec3){{{0.0f, 0.0f, 0.0f}}};
+	res[scene->objc].r = parse_double(&line, err, positive_normalized);
+	if (*err == ERROR)
+		res[scene->objc].r = 1.0f;
 	*err = 0;
 	append_obj(scene, res);
 }
@@ -57,6 +60,9 @@ void	parse_cylinder(char const *line, int *err, t_scene *scene)
 	parse_color(res[scene->objc].emit.e, &line, err);
 	if (*err == ERROR)
 		res[scene->objc].emit = (t_vec3){{{0.0f, 0.0f, 0.0f}}};
+	res[scene->objc].r = parse_double(&line, err, positive_normalized);
+	if (*err == ERROR)
+		res[scene->objc].r = 1.0f;
 	*err = 0;
 	append_obj(scene, res);
 }
