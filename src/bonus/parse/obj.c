@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:57 by francoma          #+#    #+#             */
-/*   Updated: 2023/06/19 08:25:53 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/19 08:29:32 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,9 @@ void	parse_sphere(char const *line, int *err, t_scene *scene)
 	parse_color(res[scene->objc].sphere.color.e, &line, err);
 	if (*err == ERROR)
 		return ;
+	parse_color(res[scene->objc].emit.e, &line, err);
+	if (*err == ERROR)
+		res[scene->objc].emit = (t_vec3){{{0.0f, 0.0f, 0.0f}}};
+	*err = 0;
 	append_obj(scene, res);
 }

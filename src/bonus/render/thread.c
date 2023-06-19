@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 22:26:02 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/06/16 13:41:24 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/19 08:53:07 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "render/context.h"
 #include "render/render.h"
 #include "util/util.h"
+#include "math/math.h"
 
 #include <stdio.h>
 
@@ -22,20 +23,21 @@ t_rstate	*getstate(void)
 {
 	static t_rstate	state = {
 		0,
+		0,
 		32,
 		1,
-		100,
+		200,
 		PTHREAD_MUTEX_INITIALIZER
 	};
 
 	return (&state);
 }
 
-int	vec_pixel(const t_vec3 *vec, float id)
+static int	vec_pixel(t_vec3 vec, float id)
 {
-	return (((int)(vec->x / id * 255.0f))
-		| ((int)(vec->y / id * 255.0f) << 8)
-		| ((int)(vec->z / id * 255.0f) << 16) | 0xFF000000);
+	return (imin((int)(vec.x / id * 255.0f), 255)
+		| (imin((int)(vec.y / id * 255.0f), 255) << 8)
+		| (imin((int)(vec.z / id * 255.0f), 255) << 16) | 0xFF000000);
 }
 
 void	renderbox(t_context *ctx, const t_region *reg)
@@ -77,7 +79,7 @@ void	transferimg(t_context *ctx, const t_region *region)
 		{
 			((int *)ctx->fb->pixels)[(region->y + i)
 				* ctx->width + region->x + j]
-				= vec_pixel(img + (i * region->width + j),
+				= vec_pixel(img[i * region->width + j],
 					(float)ctx->frameid[region->imgid]);
 			j++;
 		}
@@ -85,8 +87,6 @@ void	transferimg(t_context *ctx, const t_region *region)
 	}
 	if (ctx->frameid[region->imgid] < SAMPLE_COUNT)
 		renderbox(ctx, region);
-	else
-		printf("Rendered image %d\n", region->imgid);
 	++(ctx->frameid[region->imgid]);
 }
 
@@ -102,16 +102,14 @@ void	*renderthread(void *arg)
 	{
 		pthread_mutex_lock(&state->indexmutex);
 		if (id == -1)
-			id = state->index;
-		if (state->index * state->regsize >= ctx->height * ctx->width)
+			id = state->threadindex++;
+		if (state->index * state->regsize
+			>= ctx->height * ctx->width / state->regsize)
 			return ((void *)(size_t)pthread_mutex_unlock(&state->indexmutex));
 		region = (t_region){state->index * state->regsize % ctx->width,
 			state->index * state->regsize / ctx->width * state->regsize,
-			state->regsize, state->regsize, id};
-		if (region.y + region.height > ctx->height)
-			region.height = ctx->height - region.y;
-		if (region.x + region.width > ctx->width)
-			region.width = ctx->width - region.x;
+			umin(state->regsize, ctx->width - region.x),
+			umin(state->regsize, ctx->height - region.y), id};
 		state->index++;
 		pthread_mutex_unlock(&state->indexmutex);
 		ctx->frameid[id] = 1;

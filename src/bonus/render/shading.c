@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:04:34 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/06/16 13:21:13 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/19 08:48:35 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include "math/mat3.h"
 #include "math/vecmath.h"
 #include "obj.h"
+
+#define SAMPLE_DEPTH 8
 
 typedef struct s_data
 {
@@ -101,23 +103,32 @@ static t_vec3	getnormal(const t_obj *obj, const t_vec3 hit)
 // 			32.0f) / data->dist;
 // }
 
-t_vec3	shade(const t_obj *obj, const t_vec3 hit, const t_scene *s, size_t d)
+t_vec3	shade(const t_obj *obj, t_vec3 hit, const t_scene *s)
 {
 	t_data	data;
+	t_vec3	light;
 	t_vec3	color;
 	t_hit	h;
+	size_t	i;
 
-	if (!d)
-		return ((t_vec3){{{0.0f, 0.0f, 0.0f}}});
-	color = (t_vec3){{{0.0f, 0.0f, 0.0f}}};
+	light = obj->emit;
+	color = obj->color;
 	data.normal = getnormal(obj, hit);
 	data.view = vec3_norm(vec3_sub(s->camera.pos, hit));
-	h = raycast((t_ray){hit, randnormal(data.normal)}, s);
-	if (h.obj)
-		color = vec3_mult(vec3_add(color,
-					vec3_scale(shade(h.obj, h.pos, s, d - 1), 0.5f)), obj->color);
-	else
-		color = vec3_mult(vec3_add(color, (t_vec3){{{1.0f, 1.0f, 1.0f}}}),
-				obj->color);
-	return (color);
+	i = -1;
+	while (++i < SAMPLE_DEPTH)
+	{
+		h = raycast((t_ray){hit, randnormal(data.normal)}, s);
+		if (!h.obj)
+		{
+			// light = vec3_add(light, vec3_mult((t_vec3){{{0.6f, 0.7f, 0.9f}}},
+			// 			color));
+			break ;
+		}
+		color = vec3_mult(color, h.obj->color);
+		light = vec3_add(light, vec3_mult(h.obj->emit, color));
+		hit = h.pos;
+		data.normal = getnormal(h.obj, hit);
+	}
+	return (light);
 }

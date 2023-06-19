@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:56:57 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/06/16 13:35:26 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/19 08:10:02 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@
 #include "render/shading.h"
 #include "thread.h"
 
-void	blend(t_vec3 *c1, const t_vec3 c2)
+static void	blend(t_vec3 *c1, const t_vec3 c2)
 {
 	*c1 = vec3_add(*c1, c2);
 }
 
-t_vec3	*imgvec(t_context *ctx, const t_region *reg, const unsigned int x,
-		const unsigned int y)
+static t_vec3	*imgvec(t_context *ctx, const t_region *reg,
+	const unsigned int x, const unsigned int y)
 {
 	return (&(ctx->secimg[reg->imgid][y * reg->width + x]));
 }
 
-t_vec3	pixel_cast(t_context *ctx, const t_ray ray, const unsigned int x,
-		const unsigned int y)
+t_vec3	pixel_cast(t_context *ctx, const t_ray ray,
+	const unsigned int x, const unsigned int y)
 {
 	t_vec3		color;
 	t_hit		hit;
@@ -45,7 +45,7 @@ t_vec3	pixel_cast(t_context *ctx, const t_ray ray, const unsigned int x,
 			ray.pos.z + ((rand() / (FPR)(RAND_MAX)) - 0.5f) * 0.0015f,
 		}}}, ray.dir}, &ctx->scene);
 	if (hit.obj)
-		color = shade(hit.obj, hit.pos, &ctx->scene, SAMPLE_DEPTH);
+		color = shade(hit.obj, hit.pos, &ctx->scene);
 	else
 		color = (t_vec3){{{0.3f, 0.5f, 0.8f}}};
 	color.x = sqrtf(color.x);
@@ -63,10 +63,10 @@ void	renderregion(t_context *ctx, const t_region region)
 	while (++i[2] < SAMPLE_COUNT)
 	{
 		i[0] = region.y - 1;
-		while (++i[0] < region.y + region.height && i[0] < ctx->height)
+		while (++i[0] < region.y + region.height)
 		{
 			i[1] = region.x - 1;
-			while (++i[1] < region.x + region.width && i[1] < ctx->width)
+			while (++i[1] < region.x + region.width)
 			{
 				if (ctx->exit)
 					return ;
@@ -88,11 +88,12 @@ void	render(t_context *ctx)
 	size_t		i;
 
 	i = -1;
-	while (++i < 6)
+	// printf("threads: %d\n", THREADS);
+	while (++i < THREADS)
 		ctx->secimg[i] = malloc(getstate()->regsize * getstate()->regsize
 				* sizeof(t_vec3));
 	i = -1;
-	while (++i < 6)
+	while (++i < THREADS)
 		pthread_create(&ctx->threads[i], NULL, renderthread,
 			(void *)ctx);
 }

@@ -5,8 +5,8 @@ SRC_FILES	=	exit.c \
 				math/vecmath.c \
 				parse/data_types.c \
 				parse/file.c \
-				parse/obj.c \
-				parse/obj2.c \
+				bonus/parse/obj.c \
+				bonus/parse/obj2.c \
 				parse/ranges.c \
 				parse/ranges2.c \
 				bonus/render/context.c \
@@ -33,8 +33,8 @@ OBJ:=$(addprefix $(OBJ_DIR)/,$(SRC_FILES:.c=.o))
 NAME=miniRT
 
 CC=gcc
-CFLAGS=-Wall -Wpedantic -Werror -Isrc/bonus -Isrc -Imlx/include -O2
-LDFLAGS=-Lmlx -O2
+CFLAGS=-Wall -Wpedantic -Werror -Isrc/bonus -Isrc -Imlx/include -Ofast -flto
+LDFLAGS=-Lmlx -Ofast -flto
 LDLIBS=-lmlx42 -framework OpenGL -framework AppKit -framework IOKit -lglfw3
 
 all: mlx $(NAME)

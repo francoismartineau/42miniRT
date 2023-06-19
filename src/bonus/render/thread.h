@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 22:26:17 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/06/16 10:05:27 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/19 07:27:44 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <pthread.h>
 
+# define THREADS 12
+
 typedef struct s_context	t_context;
 typedef struct s_region		t_region;
 typedef pthread_mutex_t		t_mutex;
@@ -22,6 +24,7 @@ typedef pthread_mutex_t		t_mutex;
 typedef struct s_rstate
 {
 	size_t	index;
+	size_t	threadindex;
 	size_t	samples;
 	size_t	depth;
 	size_t	regsize;

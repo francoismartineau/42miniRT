@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 09:44:33 by francoma          #+#    #+#             */
-/*   Updated: 2023/06/16 10:16:55 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/19 07:29:05 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@
 #include "debug/debug.h"
 
 #include <math.h>
-
-#define REG_SIZE 150
 
 void	rtkey(mlx_key_data_t keydata, void *param)
 {
@@ -74,7 +72,7 @@ int	main(int argc, char const *argv[])
 	mlx_key_hook(ctx.mlx, rtkey, &ctx);
 	mlx_loop(ctx.mlx);
 	i = -1;
-	while (++i < 6)
+	while (++i < THREADS)
 		pthread_join(ctx.threads[i], NULL);
 	context_free(&ctx);
 	return (0);

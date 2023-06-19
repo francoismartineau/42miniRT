@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 07:36:06 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/06/16 10:17:26 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/19 07:33:50 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	context_new(t_context *ctx, int width, int height)
 	ft_intset((int *)ctx->fb->pixels, 0xff000000, width * height);
 	mlx_image_to_window(ctx->mlx, ctx->fb, 0, 0);
 	mlx_resize_hook(ctx->mlx, &context_resize, ctx);
+	ctx->exit = 0;
 	return (1);
 }
 
@@ -64,7 +65,7 @@ void	context_free(t_context *ctx)
 	if (ctx->fb)
 		mlx_delete_image(ctx->mlx, ctx->fb);
 	i = -1;
-	while (++i < 6)
+	while (++i < THREADS)
 		free(ctx->secimg[i]);
 	i = -1;
 	if (ctx->mlx)

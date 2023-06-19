@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:56:24 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/06/16 13:35:22 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/19 07:43:01 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 # include "render/context.h"
 
-#define SAMPLE_COUNT 256
-#define SAMPLE_DEPTH 8
+# define SAMPLE_COUNT 256
 
 typedef struct s_region
 {
