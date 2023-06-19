@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:04:34 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/06/19 08:48:35 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/19 09:09:22 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,13 +120,9 @@ t_vec3	shade(const t_obj *obj, t_vec3 hit, const t_scene *s)
 	{
 		h = raycast((t_ray){hit, randnormal(data.normal)}, s);
 		if (!h.obj)
-		{
-			// light = vec3_add(light, vec3_mult((t_vec3){{{0.6f, 0.7f, 0.9f}}},
-			// 			color));
 			break ;
-		}
 		color = vec3_mult(color, h.obj->color);
-		light = vec3_add(light, vec3_mult(h.obj->emit, color));
+		light = vec3_add(light, vec3_mult(vec3_scale(h.obj->emit, 10.0f), color));
 		hit = h.pos;
 		data.normal = getnormal(h.obj, hit);
 	}

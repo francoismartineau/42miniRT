@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 22:26:17 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/06/19 07:27:44 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:04:23 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ typedef pthread_mutex_t		t_mutex;
 
 typedef struct s_rstate
 {
-	size_t	index;
+	size_t	x;
+	size_t	y;
 	size_t	threadindex;
 	size_t	samples;
 	size_t	depth;

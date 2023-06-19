@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 22:26:02 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/06/19 08:53:07 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:11:21 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,41 @@ t_rstate	*getstate(void)
 	static t_rstate	state = {
 		0,
 		0,
+		0,
 		32,
 		1,
-		200,
+		150,
 		PTHREAD_MUTEX_INITIALIZER
 	};
 
 	return (&state);
 }
 
-static int	vec_pixel(t_vec3 vec, float id)
+t_region	nextregion(const t_context *ctx, size_t id)
 {
-	return (imin((int)(vec.x / id * 255.0f), 255)
-		| (imin((int)(vec.y / id * 255.0f), 255) << 8)
-		| (imin((int)(vec.z / id * 255.0f), 255) << 16) | 0xFF000000);
+	t_rstate *const	state = getstate();
+	t_region		region;
+
+	region.x = state->x;
+	region.y = state->y;
+	region.width = umin(state->regsize, ctx->width - region.x);
+	region.height = umin(state->regsize, ctx->height - region.y);
+	region.imgid = id;
+	state->x += state->regsize;
+	if (state->x >= ctx->width)
+	{
+		state->x = 0;
+		state->y += state->regsize;
+	}
+	return (region);
 }
+
+// static int	vec_pixel(t_vec3 vec, float id)
+// {
+// 	return (imin((int)(vec.x / id * 255.0f), 255)
+// 		| (imin((int)(vec.y / id * 255.0f), 255) << 8)
+// 		| (imin((int)(vec.z / id * 255.0f), 255) << 16) | 0xFF000000);
+// }
 
 void	renderbox(t_context *ctx, const t_region *reg)
 {
@@ -65,29 +85,33 @@ void	renderbox(t_context *ctx, const t_region *reg)
 				+ reg->x + i] = 0xFFFFFFFF;
 }
 
-void	transferimg(t_context *ctx, const t_region *region)
+void	transferimg(t_context *ctx, const t_region *reg)
 {
-	const t_vec3	*img = ctx->secimg[region->imgid];
+	const t_vec3	*img = ctx->secimg[reg->imgid];
+	const t_vec3	*vec;
+	float			id;
 	size_t			i;
 	size_t			j;
 
 	i = 0;
-	while (i < region->height)
+	while (i < reg->height)
 	{
 		j = 0;
-		while (j < region->width)
+		while (j < reg->width)
 		{
-			((int *)ctx->fb->pixels)[(region->y + i)
-				* ctx->width + region->x + j]
-				= vec_pixel(img[i * region->width + j],
-					(float)ctx->frameid[region->imgid]);
+			vec = img + i * reg->width + j;
+			id = (float)ctx->frameid[reg->imgid];
+			((int *)ctx->fb->pixels)[(reg->y + i) * ctx->width + reg->x + j]
+				= (imin((int)(vec->x / id * 255.0f), 255)
+					| (imin((int)(vec->y / id * 255.0f), 255) << 8)
+					| (imin((int)(vec->z / id * 255.0f), 255) << 16)
+					| 0xFF000000);
 			j++;
 		}
 		i++;
 	}
-	if (ctx->frameid[region->imgid] < SAMPLE_COUNT)
-		renderbox(ctx, region);
-	++(ctx->frameid[region->imgid]);
+	if (ctx->frameid[reg->imgid]++ < SAMPLE_COUNT)
+		renderbox(ctx, reg);
 }
 
 void	*renderthread(void *arg)
@@ -103,14 +127,9 @@ void	*renderthread(void *arg)
 		pthread_mutex_lock(&state->indexmutex);
 		if (id == -1)
 			id = state->threadindex++;
-		if (state->index * state->regsize
-			>= ctx->height * ctx->width / state->regsize)
+		if (state->y >= ctx->height)
 			return ((void *)(size_t)pthread_mutex_unlock(&state->indexmutex));
-		region = (t_region){state->index * state->regsize % ctx->width,
-			state->index * state->regsize / ctx->width * state->regsize,
-			umin(state->regsize, ctx->width - region.x),
-			umin(state->regsize, ctx->height - region.y), id};
-		state->index++;
+		region = nextregion(ctx, id);
 		pthread_mutex_unlock(&state->indexmutex);
 		ctx->frameid[id] = 1;
 		ft_memset(ctx->secimg[id], 0, 12 * region.width * region.height);
