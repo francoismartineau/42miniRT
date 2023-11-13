@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 09:44:33 by francoma          #+#    #+#             */
-/*   Updated: 2023/05/31 13:16:54 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/11/13 14:15:10 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,8 @@
 #include "exit.h"
 #include "render/render.h"
 #include "parse/parse.h"
-#include "debug/debug.h"
 
 #include <math.h>
-
-#define REG_SIZE 150
 
 void	rtkey(mlx_key_data_t keydata, void *param)
 {
@@ -56,15 +53,9 @@ int	main(int argc, char const *argv[])
 {
 	t_context	ctx;
 
-	(void) argc;
-	(void) argv;
-#ifdef DEBUG
-	printf("DEBUG MODE\n");
-	atexit(ft_exit);
-#endif
 	if (argc != 2)
 		exit_error(MSG_ARG_ERR);
-	context_new(&ctx, 1200, 1000);
+	context_new(&ctx, 600, 450);
 	if (parse_file(argv[1], &ctx.scene) == ERROR)
 		exit_error(MSG_PARSE_ERR);
 	mlx_loop_hook(ctx.mlx, loop, &ctx);

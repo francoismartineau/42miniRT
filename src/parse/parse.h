@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:56:11 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/19 10:53:32 by francoma         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:23:46 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,19 @@ void			parse_sphere(char const *line, int *err, t_scene *scene);
 void			parse_plane(char const *line, int *err, t_scene *scene);
 void			parse_cylinder(char const *line, int *err, t_scene *scene);
 
-void			parse_color(FPR dst[3], char const **str, int *err);
-FPR				parse_double(char const **str, int *err, int in_range(FPR));
-void			parse_vec(FPR dst[3], char const **str,
-					int *err, int in_range(FPR));
+void			parse_color(float dst[3], char const **str, int *err);
+float			parse_double(char const **str, int *err, int in_range(float));
+void			parse_vec(float dst[3], char const **str,
+					int *err, int in_range(float));
 unsigned int	parse_uint(char const **str, int *err,
 					int in_range(unsigned int));
-void			skip_spaces(char const **str);
 
 int				in_fov_range(unsigned int n);
-int				positive_normalized(FPR n);
-int				signed_normalized(FPR n);
-int				any(FPR n);
-int				positive(FPR n);
-int				is_uchar(FPR n);
+int				positive_normalized(float n);
+int				signed_normalized(float n);
+int				any(float n);
+int				positive(float n);
+int				is_uchar(float n);
 
 void			append_obj(t_scene *scene, t_obj *new_alloc);
 void			free_scene(t_scene *scene);

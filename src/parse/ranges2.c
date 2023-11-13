@@ -3,16 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ranges2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:55:05 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/18 16:24:36 by francoma         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:22:57 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "def.h"
 
-int	is_uchar(FPR n)
+int	is_uchar(float n)
 {
 	return (n <= 255);
+}
+
+int	uintpositive(int n)
+{
+	return (n >= 0);
 }

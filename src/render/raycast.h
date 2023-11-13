@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:05:18 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/29 17:31:51 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:21:57 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_hit
 	t_obj	*obj;
 }	t_hit;
 
-FPR		ray_intersect(const t_ray ray, const t_obj *obj);
+float	ray_intersect(const t_ray ray, const t_obj *obj);
 t_hit	raycast(const t_ray ray, const t_scene *s);
 
 #endif

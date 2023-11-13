@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:23:27 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/05/05 14:09:05 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:19:40 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "util/vec3.h"
 
-t_vec3	vec3_scale(const t_vec3 v, const FPR s)
+t_vec3	vec3_scale(const t_vec3 v, const float s)
 {
 	t_vec3	vs;
 

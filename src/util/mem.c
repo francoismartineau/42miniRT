@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 11:07:46 by francoma          #+#    #+#             */
-/*   Updated: 2023/05/05 22:55:39 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:30:45 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,19 @@ void	ft_intset(int *b, int c, size_t len)
 		b[i] = c;
 		i++;
 	}
+}
+
+void	*ft_malloc(size_t size)
+{
+	void	*ptr;
+
+	ptr = malloc(size);
+	return (ptr);
+}
+
+void	*ft_free(void **ptr)
+{
+	free(*ptr);
+	*ptr = NULL;
+	return (NULL);
 }

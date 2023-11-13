@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 07:36:08 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/05/01 22:17:39 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:22:39 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_context
 {
 	unsigned int	width;
 	unsigned int	height;
-	FPR				aspect;
+	float			aspect;
 	mlx_t			*mlx;
 	mlx_image_t		*fb;
 	t_scene			scene;

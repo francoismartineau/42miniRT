@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 10:24:41 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/06/19 08:51:38 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:19:40 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 #include "util/vec3.h"
 
-FPR	clamp(FPR x, FPR min, FPR max)
+float	clamp(float x, float min, float max)
 {
 	if (x < min)
 		return (min);

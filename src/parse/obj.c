@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:19:57 by francoma          #+#    #+#             */
-/*   Updated: 2023/06/19 08:25:53 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:25:10 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 void	parse_a_light(char const *line, int *err, t_scene *scene)
 {
-	FPR	ratio;
+	float	ratio;
 
 	if (*err == ERROR)
 		return ;
@@ -38,7 +38,7 @@ void	parse_camera(char const *line, int *err, t_scene *scene)
 		return ;
 	parse_vec(scene->camera.pos.e, &line, err, any);
 	parse_vec(scene->camera.ori.e, &line, err, signed_normalized);
-	scene->camera.fov = (FPR)parse_uint(&line, err, in_fov_range);
+	scene->camera.fov = (float)parse_uint(&line, err, in_fov_range);
 	scene->camera.ori = vec3_norm(scene->camera.ori);
 	scene->camera.rot = lookvector(scene->camera.ori);
 	scene->camera.fov *= M_PI / 180.0f;
@@ -47,7 +47,7 @@ void	parse_camera(char const *line, int *err, t_scene *scene)
 void	parse_light(char const *line, int *err, t_scene *scene)
 {
 	t_light	*res;
-	FPR		ratio;
+	float	ratio;
 
 	if (*err == ERROR)
 		return ;
@@ -71,7 +71,7 @@ void	parse_light(char const *line, int *err, t_scene *scene)
 
 void	parse_sphere(char const *line, int *err, t_scene *scene)
 {
-	t_obj		*res;
+	t_obj	*res;
 
 	if (*err == ERROR)
 		return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:55:47 by francoma          #+#    #+#             */
-/*   Updated: 2023/05/30 18:51:22 by root             ###   ########.fr       */
+/*   Updated: 2023/09/22 17:54:28 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@
 #include "parse/parse.h"
 #include "def.h"
 #include "obj.h"
-
-void	skip_spaces(char const **str)
-{
-	while (**str <= ' ')
-		++(*str);
-}
 
 static int	is_type(char const **line, char const *type)
 {
@@ -57,8 +51,9 @@ static t_obj_parser	get_obj_parser(char const **line)
 static void	parse_line(char *line, int *err, t_scene *scene)
 {
 	t_obj_parser	obj_parser;
-	
-	skip_spaces((const char **) &line);
+
+	while (*line <= ' ')
+		++line;
 	obj_parser = get_obj_parser((const char **) &line);
 	if (obj_parser)
 		obj_parser(line, err, scene);

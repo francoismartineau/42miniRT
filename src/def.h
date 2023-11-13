@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 11:24:49 by francoma          #+#    #+#             */
-/*   Updated: 2023/06/16 07:20:45 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:19:47 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 
 # define ERROR -1
 # define SUCCESS 0
-
-# define FPR float
 
 # define NAME "miniRT"
 # define MSG_ARG_ERR "miniRT: usage: ./miniRT FILENAME\n"

@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:04:34 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/05/31 13:16:28 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:21:43 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
 
 typedef struct s_data
 {
-	FPR		dist;
+	float	dist;
 	t_vec3	normal;
 	t_vec3	light;
-	FPR		diffuse;
+	float	diffuse;
 	t_vec3	view;
 	t_vec3	reflect;
-	FPR		spec;
+	float	spec;
 }	t_data;
 
 static t_vec3	getnormal(const t_obj *obj, const t_vec3 hit)
@@ -45,9 +45,9 @@ static t_vec3	getnormal(const t_obj *obj, const t_vec3 hit)
 	}
 }
 
-static t_vec3	desaturate(const t_vec3 color, FPR total)
+static t_vec3	desaturate(const t_vec3 color, float total)
 {
-	const FPR		desat = powf(total, 5);
+	const float	desat = powf(total, 5);
 
 	return ((t_vec3){{{
 				color.x + (1.0f - color.x) * desat,
@@ -60,7 +60,7 @@ static int	isobscured(const t_vec3 hit, const t_scene *s,
 	const t_obj *obj, const t_light *l)
 {
 	const t_ray		ray = (t_ray){l->pos, vec3_sub(hit, l->pos)};
-	FPR				t;
+	float			t;
 	size_t			i;
 
 	i = -1;

@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 13:55:09 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/29 15:38:14 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:19:40 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include "vecmath.h"
 #include "mat3.h"
 
-static t_mat3	rotation(const t_vec3 axis, const FPR angle)
+static t_mat3	rotation(const t_vec3 axis, const float angle)
 {
 	const t_vec3	axisn = vec3_norm(axis);
-	const FPR		f[6] = {
+	const float		f[6] = {
 		cosf(angle),
 		sinf(angle),
 		1.0f - f[0],
@@ -42,7 +42,7 @@ t_mat3	mat3_rotvec(const t_vec3 v1)
 {
 	const t_vec3	up = {{{0.0f, -1.0f, 0.0f}}};
 	const t_vec3	axis = vec3_cross(v1, up);
-	const FPR		angle = acosf(vec3_dot(v1, up) / (vec3_length(v1)));
+	const float		angle = acosf(vec3_dot(v1, up) / (vec3_length(v1)));
 
 	return (rotation(axis, angle));
 }

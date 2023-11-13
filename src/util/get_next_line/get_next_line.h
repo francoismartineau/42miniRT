@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 18:56:49 by root              #+#    #+#             */
-/*   Updated: 2023/05/30 18:43:51 by root             ###   ########.fr       */
+/*   Updated: 2023/08/26 14:09:35 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #  define BUFFER_SIZE 64
 # endif
 # ifndef OPEN_MAX
-# define OPEN_MAX 256
+#  define OPEN_MAX 256
 # endif
 
 # include <unistd.h>

@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:27:11 by francoma          #+#    #+#             */
-/*   Updated: 2023/05/05 22:56:00 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:29:29 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		strncmp(const char *s1, const char *s2, size_t n);
 char	*get_next_line(int fd);
 char	*intoa(int n);
 
-FPR		atod(char const **str);
+float	atod(char const **str);
 int		is_digit(char c);
 
 void	*ft_malloc(size_t size);

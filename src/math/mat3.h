@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 13:44:39 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/04/27 09:43:55 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:19:40 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ typedef struct s_mat3
 		};
 		struct
 		{
-			FPR	m00;
-			FPR	m01;
-			FPR	m02;
-			FPR	m10;
-			FPR	m11;
-			FPR	m12;
-			FPR	m20;
-			FPR	m21;
-			FPR	m22;
+			float	m00;
+			float	m01;
+			float	m02;
+			float	m10;
+			float	m11;
+			float	m12;
+			float	m20;
+			float	m21;
+			float	m22;
 		};
 		float	m[9];
 	};

@@ -33,43 +33,43 @@ typedef struct s_a_light
 
 typedef struct s_camera
 {
-	t_vec3			pos;
-	t_vec3			ori;
-	t_mat3			rot;
-	FPR				fov;
+	t_vec3	pos;
+	t_vec3	ori;
+	t_mat3	rot;
+	float	fov;
 }	t_camera;
 
 // ratio: 0,1
 typedef struct s_light
 {
-	t_vec3			pos;
-	t_vec3			color;
+	t_vec3	pos;
+	t_vec3	color;
 }	t_light;
 
 typedef struct s_sphere
 {
-	t_vec3			pos;
-	t_vec3			color;
-	FPR				rad;
+	t_vec3	pos;
+	t_vec3	color;
+	float	rad;
 }	t_sphere;
 
 // ori: -1,1
 typedef struct s_plane
 {
-	t_vec3			pos;
-	t_vec3			color;
-	t_vec3			ori;
+	t_vec3	pos;
+	t_vec3	color;
+	t_vec3	ori;
 }	t_plane;
 
 // coord: cylinder's center
 // axis: -1,1
 typedef struct s_cylinder
 {
-	t_vec3			pos;
-	t_vec3			color;
-	t_vec3			axis;
-	FPR				rad;
-	FPR				height;
+	t_vec3	pos;
+	t_vec3	color;
+	t_vec3	axis;
+	float	rad;
+	float	height;
 }	t_cylinder;
 
 typedef enum e_type

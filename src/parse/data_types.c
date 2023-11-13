@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:29:18 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/29 20:30:04 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:19:39 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	parsing_error(char const *str, int *err)
 	write(STDERR_FILENO, "^\n", 2);
 }
 
-void	parse_color(FPR dst[3], char const **str, int *err)
+void	parse_color(float dst[3], char const **str, int *err)
 {
 	if (*err == ERROR)
 		return ;
@@ -51,13 +51,14 @@ void	parse_color(FPR dst[3], char const **str, int *err)
 	dst[2] /= 255;
 }
 
-FPR	parse_double(char const **str, int *err, int in_range(FPR))
+float	parse_double(char const **str, int *err, int in_range(float))
 {
-	FPR	res;
+	float	res;
 
 	if (*err == ERROR)
 		return (0);
-	skip_spaces(str);
+	while (**str <= ' ')
+		++(*str);
 	if ((**str == '-' && !is_digit((*str)[1]) && (*str)[1] != '.')
 		|| (**str != '-' && !is_digit(**str) && **str != '.'))
 		parsing_error(*str, err);
@@ -72,14 +73,15 @@ FPR	parse_double(char const **str, int *err, int in_range(FPR))
 	return (res);
 }
 
-void	parse_vec(FPR dst[3], char const **str,
-	int *err, int in_range(FPR))
+void	parse_vec(float dst[3], char const **str,
+	int *err, int in_range(float))
 {
 	int		i;
 
 	if (*err == ERROR)
 		return ;
-	skip_spaces(str);
+	while (**str <= ' ')
+		++(*str);
 	i = 0;
 	while (i < 3)
 	{
@@ -100,7 +102,8 @@ unsigned int	parse_uint(char const **str, int *err,
 
 	if (*err == ERROR)
 		return (0);
-	skip_spaces(str);
+	while (**str <= ' ')
+		++(*str);
 	if (!is_digit(**str))
 		parsing_error(*str, err);
 	if (*err == ERROR)

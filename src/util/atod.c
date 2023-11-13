@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atod.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 10:26:56 by francoma          #+#    #+#             */
-/*   Updated: 2023/05/30 19:05:02 by root             ###   ########.fr       */
+/*   Updated: 2023/11/09 16:20:24 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_digit(char c)
 
 static long	extract_integral(char const **str)
 {
-	long			integral;	
+	long	integral;	
 
 	integral = 0;
 	while (is_digit(**str))
@@ -31,7 +31,7 @@ static long	extract_integral(char const **str)
 	return (integral);
 }
 
-static FPR	extract_fractional(char const **str)
+static float	extract_fractional(char const **str)
 {
 	long			fract;
 	unsigned int	fract_len;
@@ -46,13 +46,13 @@ static FPR	extract_fractional(char const **str)
 	}
 	if (!fract_len)
 		return (0);
-	return ((FPR)fract / powf(10, fract_len));
+	return ((float)fract / powf(10, fract_len));
 }
 
-FPR	atod(char const **str)
+float	atod(char const **str)
 {
 	int		sign;
-	FPR		integral;	
+	float	integral;	
 
 	while (**str <= ' ')
 		++(*str);

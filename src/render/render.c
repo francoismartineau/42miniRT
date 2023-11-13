@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 08:56:57 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/05/07 00:32:30 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:19:40 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 #include "math/vecmath.h"
 #include "math/mat3.h"
@@ -22,7 +23,7 @@
 
 void	renderregion(t_context *ctx, const t_region region)
 {
-	const FPR		fov = tanf(ctx->scene.camera.fov / 2.0f);
+	const float		fov = tanf(ctx->scene.camera.fov / 2.0f);
 	t_hit			hit;
 	unsigned int	i[2];
 
@@ -51,5 +52,8 @@ void	renderregion(t_context *ctx, const t_region region)
 
 void	render(t_context *ctx)
 {
+	const time_t	start = time(NULL);
+
 	renderregion(ctx, (t_region){0, 0, ctx->width, ctx->height});
+	printf("Render time: %lds\n", time(NULL) - start);
 }

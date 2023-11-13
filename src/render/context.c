@@ -6,7 +6,7 @@
 /*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 07:36:06 by eboyce-n          #+#    #+#             */
-/*   Updated: 2023/05/05 22:50:06 by eboyce-n         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:19:40 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	context_resize(int32_t width, int32_t height, void *param)
 	mlx_image_to_window(ctx->mlx, ctx->fb, 0, 0);
 	ctx->width = width;
 	ctx->height = height;
-	ctx->aspect = (FPR)width / (FPR)height;
+	ctx->aspect = (float)width / (float)height;
 	render(ctx);
 }
 
@@ -37,7 +37,7 @@ int	context_new(t_context *ctx, int width, int height)
 {
 	ctx->width = width;
 	ctx->height = height;
-	ctx->aspect = (FPR)width / (FPR)height;
+	ctx->aspect = (float)width / (float)height;
 	ctx->mlx = mlx_init(width, height, "miniRT", 1);
 	ctx->fb = mlx_new_image(ctx->mlx, width, height);
 	if (!ctx->mlx || !ctx->fb)

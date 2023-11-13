@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intoa.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: francoma <francoma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eboyce-n <eboyce-n@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 10:53:37 by francoma          #+#    #+#             */
-/*   Updated: 2023/04/19 11:05:32 by francoma         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:20:33 by eboyce-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ static void	_intoa(long n, char **s_pos)
 
 char	*intoa(int n)
 {
-	char			*s;
-	char			*s_pos;
-	long			l_n;
+	char	*s;
+	char	*s_pos;
+	long	l_n;
 
 	l_n = n;
 	s = ft_malloc(intoa_strlen(l_n) + 1);
