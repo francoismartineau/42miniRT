@@ -6,7 +6,8 @@ obj
 dobj
 
 a.out
+*.dSYM
 *.o
 *.d
 *.a
-*.dSYM
+!libmlx42.a

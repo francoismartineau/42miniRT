@@ -29,9 +29,9 @@ OBJ:=$(addprefix $(OBJ_DIR)/,$(SRC_FILES:.c=.o))
 NAME=miniRT
 
 CC=gcc
-CFLAGS=-Wall -Wextra -Wpedantic -Werror -Isrc -Imlx/include -Ofast -mfpmath=sse -msse3 -ffast-math -flto
+CFLAGS=-Wall -Wextra -Wpedantic -Werror  -Isrc -Imlx/include -Ofast -mfpmath=sse -msse3 -ffast-math -flto
 LDFLAGS=-Lmlx -Wall -Ofast -flto -ffast-math -mfpmath=sse -msse3
-LDLIBS=-lmlx42 -framework OpenGL -framework AppKit -framework IOKit -lglfw3
+LDLIBS=-lmlx42 -framework OpenGL -framework AppKit -framework IOKit -L/Users/francoma/homebrew/lib -lglfw
 
 all: mlx $(NAME)
 
